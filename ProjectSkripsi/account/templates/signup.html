@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+	<title>Register</title>
+	<!-- Custom Theme files -->
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css" media="all" />
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- //web font -->
+</head>
+<body>
+	<div class="login-page">
+        <div class="form">
+            <form class="register-form" method="post">
+                {% csrf_token %}
+                <!--<input type="text" placeholder="Username"/>
+                <input type="password" placeholder="Password"/>
+                <input type="text" placeholder="Password Confirmation"/>-->
+
+                {% for field in form %}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+
+                {% endfor %}
+
+                <button type="submit">submit</button>
+                <p class="message">Already registered? <a href="{% url 'account:login_view' %}">Log In</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
