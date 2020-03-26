@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from home.views import view_data
+from home.views import view_data, view_normalisasi
 
 app_name = 'home'
 
@@ -26,4 +26,6 @@ urlpatterns = [
     path('edit/<int:pk>/', view_data.edit, name='edit'),
     path('create/', view_data.create, name='create'),
     path('delete/<int:pk>/', view_data.delete, name='delete'),
+
+    path('normalisasi/', view_normalisasi.IndexView.as_view(), name='normalisasi'),
 ]
