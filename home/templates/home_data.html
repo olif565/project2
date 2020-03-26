@@ -33,7 +33,7 @@
                     <tbody>
                     {% for data in data_list %}
                     <tr class="tr-shadow">
-                        <td><a href="{% url 'home:detail' data.pk %}"> {{ data.no }}</td>
+                        <td><a href="{% url 'home:detail' data.pk %}"> {{ data.no }}</a></td>
                         <td>{{ data.fault }}</td>
                         <td>
                             <div class="table-data-feature">

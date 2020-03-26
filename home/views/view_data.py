@@ -19,6 +19,11 @@ class DataDetailView(DetailView):
     template_name = 'data-detail.html'
 
 
+def detail(request, pk, template_name='data-detail.html'):
+    data = get_object_or_404(Data, pk=pk)
+    return render(request, template_name, data)
+
+
 def create(request):
     if request.method == 'POST':
         form = DataForm(request.POST)
