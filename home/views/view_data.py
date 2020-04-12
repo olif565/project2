@@ -3,8 +3,10 @@ from home.models import Data
 from home.forms import DataForm
 from django.views.generic import ListView, DetailView
 
+
 def dashboard(request):
     return render(request, 'home.html', {})
+
 
 class IndexView(ListView):
     template_name = 'home_data.html'
