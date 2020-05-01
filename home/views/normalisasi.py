@@ -91,8 +91,18 @@ def get_normalisasi(level):
     for i, x in enumerate(n_data_normalisasi):
         if x['fault'] == 'D1':
             x['fault'] = '1'
-        else:
+        elif x['fault'] == 'D2':
             x['fault'] = '2'
+        elif x['fault'] == 'DT':
+            x['fault'] = '3'
+        elif x['fault'] == 'T3':
+            x['fault'] = '4'
+        elif x['fault'] == 'T2':
+            x['fault'] = '5'
+        elif x['fault'] == 'T1':
+            x['fault'] = '6'
+        else:
+            x['fault'] = '7'
 
     for i, x in enumerate(n_data_normalisasi):
         if x['fault'] == '1':
