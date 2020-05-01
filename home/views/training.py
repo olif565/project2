@@ -97,3 +97,21 @@ def get_delta_alfa(data_error_rate):
     }
 
     return delta_alfa
+
+def get_alfa_baru(data_delta_alfa):
+
+    # alpha
+    a = 0
+
+    data_alfa_baru = []
+
+    for i, x in enumerate(data_delta_alfa):
+
+        ab = a + x
+        data_alfa_baru.append(ab)
+
+    alfa_baru = {
+        'data_alfa_baru': data_alfa_baru
+    }
+
+    return alfa_baru
