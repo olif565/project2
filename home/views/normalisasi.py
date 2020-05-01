@@ -1,42 +1,55 @@
 from home.models import Data
+from django.db.models import Q
 
 
 def get_normalisasi(level):
 
+    # D1 kelas 1
+    # D2 kelas 2
+    # DT kelas 3
+    # T3 kelas 4
+    # T2 kelas 5
+    # T1 kelas 6
+    # PD kelas 7
+
     datalevel = {
         1: Data.objects.all(),
-        2: Data.objects.all()[5:],
-        3: Data.objects.all()[10:],
-        4: Data.objects.all()[15:],
-        5: Data.objects.all()[20:],
-        6: Data.objects.all()[25:]
+        2: Data.objects.filter(~Q(fault='D1')),
+        3: Data.objects.filter(~Q(fault='D1') & ~Q(fault='D2')),
+        4: Data.objects.filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT')),
+        5: Data.objects.filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3')),
+        6: Data.objects.filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2')),
+        7: Data.objects.filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2') & ~Q(fault='T1'))
     }
 
     datalevel_persen_ch4 = {
         1: Data.objects.values_list('persen_ch4', flat=True),
-        2: Data.objects.values_list('persen_ch4', flat=True)[5:],
-        3: Data.objects.values_list('persen_ch4', flat=True)[10:],
-        4: Data.objects.values_list('persen_ch4', flat=True)[15:],
-        5: Data.objects.values_list('persen_ch4', flat=True)[20:],
-        6: Data.objects.values_list('persen_ch4', flat=True)[25:]
+        2: Data.objects.values_list('persen_ch4', flat=True).filter(~Q(fault='D1')),
+        3: Data.objects.values_list('persen_ch4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2')),
+        4: Data.objects.values_list('persen_ch4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT')),
+        5: Data.objects.values_list('persen_ch4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3')),
+        6: Data.objects.values_list('persen_ch4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2')),
+        7: Data.objects.values_list('persen_ch4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2') & ~Q(fault='T1'))
     }
 
     datalevel_persen_c2h4 = {
         1: Data.objects.values_list('persen_c2h4', flat=True),
-        2: Data.objects.values_list('persen_c2h4', flat=True)[5:],
-        3: Data.objects.values_list('persen_c2h4', flat=True)[10:],
-        4: Data.objects.values_list('persen_c2h4', flat=True)[15:],
-        5: Data.objects.values_list('persen_c2h4', flat=True)[20:],
-        6: Data.objects.values_list('persen_c2h4', flat=True)[25:]
+        2: Data.objects.values_list('persen_c2h4', flat=True).filter(~Q(fault='D1')),
+        3: Data.objects.values_list('persen_c2h4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2')),
+        4: Data.objects.values_list('persen_c2h4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT')),
+        5: Data.objects.values_list('persen_c2h4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3')),
+        6: Data.objects.values_list('persen_c2h4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2')),
+        7: Data.objects.values_list('persen_c2h4', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2') & ~Q(fault='T1'))
     }
 
     datalevel_persen_c2h2 = {
         1: Data.objects.values_list('persen_c2h2', flat=True),
-        2: Data.objects.values_list('persen_c2h2', flat=True)[5:],
-        3: Data.objects.values_list('persen_c2h2', flat=True)[10:],
-        4: Data.objects.values_list('persen_c2h2', flat=True)[15:],
-        5: Data.objects.values_list('persen_c2h2', flat=True)[20:],
-        6: Data.objects.values_list('persen_c2h2', flat=True)[25:]
+        2: Data.objects.values_list('persen_c2h2', flat=True).filter(~Q(fault='D1')),
+        3: Data.objects.values_list('persen_c2h2', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2')),
+        4: Data.objects.values_list('persen_c2h2', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT')),
+        5: Data.objects.values_list('persen_c2h2', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3')),
+        6: Data.objects.values_list('persen_c2h2', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2')),
+        7: Data.objects.values_list('persen_c2h2', flat=True).filter(~Q(fault='D1') & ~Q(fault='D2') & ~Q(fault='DT') & ~Q(fault='T3') & ~Q(fault='T2') & ~Q(fault='T1'))
     }
 
     listdata = datalevel.get(level)
@@ -105,7 +118,7 @@ def get_normalisasi(level):
             x['fault'] = '7'
 
     for i, x in enumerate(n_data_normalisasi):
-        if x['fault'] == '1':
+        if x['fault'] == str(level):
             x['kelas'] = '1'
         else:
             x['kelas'] = '-1'
