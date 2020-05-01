@@ -1,12 +1,48 @@
 from home.models import Data
 
 
-def get_normalisasi():
+def get_normalisasi(level):
 
-    listdata = Data.objects.all()
-    list_persen_ch4 = Data.objects.values_list('persen_ch4', flat=True)
-    list_persen_c2h4 = Data.objects.values_list('persen_c2h4', flat=True)
-    list_persen_c2h2 = Data.objects.values_list('persen_c2h2', flat=True)
+    datalevel = {
+        1: Data.objects.all(),
+        2: Data.objects.all()[5:],
+        3: Data.objects.all()[10:],
+        4: Data.objects.all()[15:],
+        5: Data.objects.all()[20:],
+        6: Data.objects.all()[25:]
+    }
+
+    datalevel_persen_ch4 = {
+        1: Data.objects.values_list('persen_ch4', flat=True),
+        2: Data.objects.values_list('persen_ch4', flat=True)[5:],
+        3: Data.objects.values_list('persen_ch4', flat=True)[10:],
+        4: Data.objects.values_list('persen_ch4', flat=True)[15:],
+        5: Data.objects.values_list('persen_ch4', flat=True)[20:],
+        6: Data.objects.values_list('persen_ch4', flat=True)[25:]
+    }
+
+    datalevel_persen_c2h4 = {
+        1: Data.objects.values_list('persen_c2h4', flat=True),
+        2: Data.objects.values_list('persen_c2h4', flat=True)[5:],
+        3: Data.objects.values_list('persen_c2h4', flat=True)[10:],
+        4: Data.objects.values_list('persen_c2h4', flat=True)[15:],
+        5: Data.objects.values_list('persen_c2h4', flat=True)[20:],
+        6: Data.objects.values_list('persen_c2h4', flat=True)[25:]
+    }
+
+    datalevel_persen_c2h2 = {
+        1: Data.objects.values_list('persen_c2h2', flat=True),
+        2: Data.objects.values_list('persen_c2h2', flat=True)[5:],
+        3: Data.objects.values_list('persen_c2h2', flat=True)[10:],
+        4: Data.objects.values_list('persen_c2h2', flat=True)[15:],
+        5: Data.objects.values_list('persen_c2h2', flat=True)[20:],
+        6: Data.objects.values_list('persen_c2h2', flat=True)[25:]
+    }
+
+    listdata = datalevel.get(level)
+    list_persen_ch4 = datalevel_persen_ch4.get(level)
+    list_persen_c2h4 = datalevel_persen_c2h4.get(level)
+    list_persen_c2h2 = datalevel_persen_c2h2.get(level)
 
     minvalue = {
         'persen_ch4': min([float(i) for i in list_persen_ch4]),
