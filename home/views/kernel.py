@@ -2,9 +2,9 @@ import math
 from home.views import normalisasi
 
 
-def get_kernel():
+def get_kernel(level):
 
-    n_data_normalisasi = normalisasi.get_normalisasi()['n_data_normalisasi']
+    n_data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
     n_list_data_kernel_view = []
     n_list_data_kernel = []
 
@@ -22,7 +22,8 @@ def get_kernel():
             k = math.exp((-(n1 + n2 + n3)) / (2 * (math.pow(s, 2))))
 
             if j == 0:
-                n_data_kernel_view.append(x['no'])
+                # n_data_kernel_view.append(x['no'])
+                n_data_kernel_view.append(i+1)
 
             n_data_kernel_view.append(k)
             n_data_kernel.append(k)

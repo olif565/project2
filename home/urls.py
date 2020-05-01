@@ -27,6 +27,6 @@ urlpatterns = [
     path('create/', view_data.create, name='create'),
     path('delete/<int:pk>/', view_data.delete, name='delete'),
 
-    path('normalisasi/', view_normalisasi.IndexView.as_view(), name='normalisasi'),
-    path('training/', view_training.IndexView.as_view(), name='training'),
+    path('normalisasi/<int:level>/', view_normalisasi.IndexView.as_view(), name='normalisasi'),
+    path('training/<int:level>/', view_training.IndexView.as_view(), name='training'),
 ]
