@@ -1,4 +1,7 @@
+from django.shortcuts import render
 from django.views.generic import ListView
+
+from home.forms import TrainingForm
 from home.views import training
 import logging
 
@@ -11,24 +14,59 @@ class IndexView(ListView):
 
     def get_queryset(self, **kwargs):
 
+        form = TrainingForm()
+
         level = self.kwargs['level']
-
-        matriks = training.get_matriks(level)
-        n_data_normalisasi = matriks['n_data_normalisasi']
-        n_list_data_matriks = matriks['n_list_data_matriks']
-        n_list_data_matriks_view = matriks['n_list_data_matriks_view']
-
-        data_error_rate = training.get_error_rate(n_list_data_matriks)['data_error_rate']
-        data_delta_alfa = training.get_delta_alfa(data_error_rate)['data_delta_alfa']
-        data_alfa_baru = training.get_alfa_baru(data_delta_alfa)['data_alfa_baru']
 
         context = {
             'level': level,
-            'n_data_normalisasi': n_data_normalisasi,
-            'n_list_data_matriks_view': n_list_data_matriks_view,
-            'data_error_rate': data_error_rate,
-            'data_delta_alfa': data_delta_alfa,
-            'data_alfa_baru' : data_alfa_baru
+            'n_data_normalisasi': [],
+            'n_list_data_matriks_view': [],
+            'data_iterasi': [],
+            'display': 'none',
+            'form': form
         }
 
         return context
+
+    # Handle POST HTTP requests
+    def post(self, request, *args, **kwargs):
+        form = TrainingForm(request.POST)
+
+        level = self.kwargs['level']
+
+        if form.is_valid():
+            lamda = float(form.cleaned_data['lamda'])
+            # sigma = form.cleaned_data['sigma']
+            constant = float(form.cleaned_data['constant'])
+            gamma = float(form.cleaned_data['gamma'])
+            iterasi = int(form.cleaned_data['iterasi'])
+
+            matriks = training.get_matriks(level, lamda)
+            n_data_normalisasi = matriks['n_data_normalisasi']
+            n_list_data_matriks = matriks['n_list_data_matriks']
+            n_list_data_matriks_view = matriks['n_list_data_matriks_view']
+
+            data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+
+            context = {
+                'level': level,
+                'n_data_normalisasi': n_data_normalisasi,
+                'n_list_data_matriks_view': n_list_data_matriks_view,
+                'data_iterasi': data_iterasi,
+                'display': 'block',
+                'form': form
+            }
+
+            return render(request, self.template_name, {self.context_object_name: context})
+        else:
+            context = {
+                'level': level,
+                'n_data_normalisasi': [],
+                'n_list_data_matriks_view': [],
+                'data_iterasi': [],
+                'display': 'none',
+                'form': form
+            }
+
+            return render(request, self.template_name, {self.context_object_name: context})

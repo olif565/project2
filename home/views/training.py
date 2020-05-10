@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def get_matriks(level):
+def get_matriks(level, lamda):
 
     datakernel = kernel.get_kernel(level)
     n_data_normalisasi = datakernel['n_data_normalisasi']
@@ -16,7 +16,7 @@ def get_matriks(level):
     n_list_data_matriks_view = []
 
     # lambda
-    l = 0.5
+    l = lamda
 
     for i, x in enumerate(n_list_data_kernel):
         n_data_matriks = []
@@ -49,16 +49,52 @@ def get_matriks(level):
     return data_kernel
 
 
-def get_error_rate(list_data_matriks):
+def get_iterasi(list_data_matriks, constanta, gamma, i):
 
-    # alpha
-    a = 0
+    data_iterasi = []
+
+    alfa_baru = []
+
+    for x in range(i):
+
+        # alpha
+        a = 0
+
+        if x == 0:
+            a = 0
+        else:
+            a = alfa_baru
+
+        data_error_rate = get_error_rate(a, list_data_matriks)
+        data_delta_alfa = get_delta_alfa(a, data_error_rate, constanta, gamma)
+        data_alfa_baru = get_alfa_baru(a, data_delta_alfa)
+
+        alfa_baru = data_alfa_baru
+
+        iterasi = {
+            'data_error_rate': data_error_rate,
+            'data_delta_alfa': data_delta_alfa,
+            'data_alfa_baru': data_alfa_baru
+        }
+
+        data_iterasi.append(iterasi)
+
+    return data_iterasi
+
+
+def get_error_rate(alpha, list_data_matriks):
 
     data_error_rate = []
 
     for i, x in enumerate(list_data_matriks):
 
         for j, y in enumerate(x):
+
+            a = 0
+            if alpha == 0:
+                a = 0
+            else:
+                a = alpha[i]
 
             er = a * float(y)
 
@@ -67,51 +103,45 @@ def get_error_rate(list_data_matriks):
             else:
                 data_error_rate[j] = data_error_rate[j] + er
 
-    error_rate = {
-        'data_error_rate': data_error_rate
-    }
-
-    return error_rate
+    return data_error_rate
 
 
-def get_delta_alfa(data_error_rate):
-
-    # alpha
-    a = 0
+def get_delta_alfa(alpha, data_error_rate, constanta, gamma):
 
     # constant
-    const = 1
+    const = constanta
 
     # gamma
-    g = 0.01
+    g = gamma
 
     data_delta_alfa = []
 
     for i, x in enumerate(data_error_rate):
 
+        a = 0
+        if alpha == 0:
+            a = 0
+        else:
+            a = alpha[i]
+
         da = min(max(g * (1 - x), -a), (const - a))
         data_delta_alfa.append(da)
 
-    delta_alfa = {
-        'data_delta_alfa': data_delta_alfa
-    }
+    return data_delta_alfa
 
-    return delta_alfa
-
-def get_alfa_baru(data_delta_alfa):
-
-    # alpha
-    a = 0
+def get_alfa_baru(alpha, data_delta_alfa):
 
     data_alfa_baru = []
 
     for i, x in enumerate(data_delta_alfa):
 
+        a = 0
+        if alpha == 0:
+            a = 0
+        else:
+            a = alpha[i]
+
         ab = a + x
         data_alfa_baru.append(ab)
 
-    alfa_baru = {
-        'data_alfa_baru': data_alfa_baru
-    }
-
-    return alfa_baru
+    return data_alfa_baru
