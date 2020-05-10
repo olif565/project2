@@ -1,13 +1,17 @@
 import math
+
+from home.models import Training
 from home.views import kernel
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-def get_matriks(level, lamda):
+def get_matriks(level, lamda, sigma):
 
-    datakernel = kernel.get_kernel(level)
+    s = sigma
+
+    datakernel = kernel.get_kernel(level, s)
     n_data_normalisasi = datakernel['n_data_normalisasi']
     n_list_data_kernel = datakernel['n_list_data_kernel']
     n_list_data_kernel_view = datakernel['n_list_data_kernel_view']
