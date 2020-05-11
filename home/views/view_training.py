@@ -73,16 +73,26 @@ class IndexView(ListView):
 
             matriks = training.get_matriks(level, lamda, float(s))
             n_data_normalisasi = matriks['n_data_normalisasi']
+            n_list_data_kernel = matriks['n_list_data_kernel']
             n_list_data_matriks = matriks['n_list_data_matriks']
             n_list_data_matriks_view = matriks['n_list_data_matriks_view']
 
             data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+
+            data_bobot = []
+            bias = 0
+            if len(data_iterasi) > 0:
+                dt = training.get_bias(n_data_normalisasi, data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
+                data_bobot = dt['data_bobot']
+                bias = dt['bias']
 
             context = {
                 'level': level,
                 'n_data_normalisasi': n_data_normalisasi,
                 'n_list_data_matriks_view': n_list_data_matriks_view,
                 'data_iterasi': data_iterasi,
+                'data_bobot': data_bobot,
+                'bias': bias,
                 'display': 'block',
                 'form': form
             }

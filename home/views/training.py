@@ -46,6 +46,7 @@ def get_matriks(level, lamda, sigma):
 
     data_kernel = {
         'n_data_normalisasi': n_data_normalisasi,
+        'n_list_data_kernel': n_list_data_kernel,
         'n_list_data_matriks': n_list_data_matriks,
         'n_list_data_matriks_view': n_list_data_matriks_view
     }
@@ -133,6 +134,7 @@ def get_delta_alfa(alpha, data_error_rate, constanta, gamma):
 
     return data_delta_alfa
 
+
 def get_alfa_baru(alpha, data_delta_alfa):
 
     data_alfa_baru = []
@@ -149,3 +151,54 @@ def get_alfa_baru(alpha, data_delta_alfa):
         data_alfa_baru.append(ab)
 
     return data_alfa_baru
+
+
+def get_bias(data_normalisasi, data_alpha, data_kernel):
+
+    alpha1 = []
+    alpha2 = []
+
+    for i, x in enumerate(data_alpha):
+        if data_normalisasi[i]['kelas'] == '1':
+            alpha1.append(x)
+        else:
+            alpha2.append(x)
+
+    index1 = alpha1.index(max(alpha1))
+    index2 = alpha2.index(max(alpha2))
+
+    kernel = [data_kernel[index1], data_kernel[index2]]
+
+    data_bobot = []
+
+    sum_w = []
+
+    for i, x in enumerate(kernel):
+
+        bobot = []
+
+        if  i == 0:
+            bobot.append('𝒘.𝒙+')
+        if  i == 1:
+            bobot.append('𝒘.𝒙-')
+
+        for j, y in enumerate(x):
+
+            w = int(data_normalisasi[j]['kelas']) * data_alpha[i] * kernel[i][j]
+            bobot.append(w)
+
+        data_bobot.append(bobot)
+
+        sw = sum(bobot[1:])
+        sum_w.append(sw)
+
+    bias = sum(sum_w) / 2
+
+    data = {
+        'data_bobot': data_bobot,
+        'bias': bias
+    }
+
+    return data
+
+
