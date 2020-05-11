@@ -164,8 +164,8 @@ def get_bias(data_normalisasi, data_alpha, data_kernel):
         else:
             alpha2.append(x)
 
-    index1 = alpha1.index(max(alpha1))
-    index2 = alpha2.index(max(alpha2))
+    index1 = data_alpha.index(max(alpha1))
+    index2 = data_alpha.index(max(alpha2))
 
     kernel = [data_kernel[index1], data_kernel[index2]]
 
@@ -184,15 +184,19 @@ def get_bias(data_normalisasi, data_alpha, data_kernel):
 
         for j, y in enumerate(x):
 
-            w = int(data_normalisasi[j]['kelas']) * data_alpha[i] * kernel[i][j]
+            w = int(data_normalisasi[j]['kelas']) * data_alpha[j] * kernel[i][j]
             bobot.append(w)
 
+            print(j, data_alpha[j], kernel[i][j])
+
         data_bobot.append(bobot)
+
+        print(sum(bobot[1:]))
 
         sw = sum(bobot[1:])
         sum_w.append(sw)
 
-    bias = sum(sum_w) / 2
+    bias = -(sum(sum_w)) / 2
 
     data = {
         'data_bobot': data_bobot,
