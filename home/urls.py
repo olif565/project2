@@ -14,17 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.urls import path, include
-from home.views import view_data, view_normalisasi, view_training
+from django.urls import path
+
+from home.views import view_data, view_data_testing, view_normalisasi, view_training
 
 app_name = 'home'
 
 urlpatterns = [
     path('', view_data.dashboard, name='index'),
-    path('list', view_data.IndexView.as_view(), name='list'),
-    path('<int:pk>/', view_data.DataDetailView.as_view(), name='detail'),
+    path('data-training', view_data.IndexView.as_view(), name='data-training'),
+    path('data-testing', view_data_testing.IndexView.as_view(), name='data-testing'),
+    path('detail-training/<int:pk>/', view_data.DataDetailView.as_view(), name='detail-training'),
+    path('detail-testing/<int:pk>/', view_data_testing.DataDetailView.as_view(), name='detail-testing'),
     path('edit/<int:pk>/', view_data.edit, name='edit'),
-    path('create/', view_data.create, name='create'),
+    path('create-training/', view_data.create, name='create-training'),
+    path('create-testing/', view_data_testing.create, name='create-testing'),
     path('delete/<int:pk>/', view_data.delete, name='delete'),
 
     path('normalisasi/<int:level>/', view_normalisasi.IndexView.as_view(), name='normalisasi'),

@@ -3,7 +3,7 @@ from django.views.generic import ListView
 
 from home.forms import TrainingForm
 from home.models import Training
-from home.views import training
+from home.views import training, normalisasi
 import logging
 
 logger = logging.getLogger(__name__)
@@ -71,7 +71,9 @@ class IndexView(ListView):
             param.iterasi = iterasi
             param.save()
 
-            matriks = training.get_matriks(level, lamda, float(s))
+            data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
+
+            matriks = training.get_matriks(data_normalisasi, lamda, float(s))
             n_data_normalisasi = matriks['n_data_normalisasi']
             n_list_data_kernel = matriks['n_list_data_kernel']
             n_list_data_matriks = matriks['n_list_data_matriks']
@@ -82,7 +84,7 @@ class IndexView(ListView):
             data_bobot = []
             bias = 0
             if len(data_iterasi) > 0:
-                dt = training.get_bias(n_data_normalisasi, data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
+                dt = training.get_bias(level, n_data_normalisasi, data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
                 data_bobot = dt['data_bobot']
                 bias = dt['bias']
 

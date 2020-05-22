@@ -1,17 +1,17 @@
+import logging
 import math
 
-from home.models import Training
+from home.models import DataTraining, DataBias
 from home.views import kernel
-import logging
 
 logger = logging.getLogger(__name__)
 
 
-def get_matriks(level, lamda, sigma):
+def get_matriks(data_normalisasi, lamda, sigma):
 
     s = sigma
 
-    datakernel = kernel.get_kernel(level, s)
+    datakernel = kernel.get_kernel(data_normalisasi, s)
     n_data_normalisasi = datakernel['n_data_normalisasi']
     n_list_data_kernel = datakernel['n_list_data_kernel']
     n_list_data_kernel_view = datakernel['n_list_data_kernel_view']
@@ -153,7 +153,7 @@ def get_alfa_baru(alpha, data_delta_alfa):
     return data_alfa_baru
 
 
-def get_bias(data_normalisasi, data_alpha, data_kernel):
+def get_bias(level, data_normalisasi, data_alpha, data_kernel):
 
     alpha1 = []
     alpha2 = []
@@ -187,16 +187,38 @@ def get_bias(data_normalisasi, data_alpha, data_kernel):
             w = int(data_normalisasi[j]['kelas']) * data_alpha[j] * kernel[i][j]
             bobot.append(w)
 
-            print(j, data_alpha[j], kernel[i][j])
+            # print(j, data_alpha[j], kernel[i][j])
 
         data_bobot.append(bobot)
 
-        print(sum(bobot[1:]))
+        # print(sum(bobot[1:]))
 
         sw = sum(bobot[1:])
         sum_w.append(sw)
 
     bias = -(sum(sum_w)) / 2
+
+    # Save Alpha to DB
+    for i, x in enumerate(data_alpha):
+        db = DataTraining.objects.filter(no=str(i + 1), level=str(level))
+
+        if len(db) > 0:
+            datatraining = db[0]
+            datatraining.alpha = x
+            datatraining.save()
+
+    # Save Bias to DB
+    db = DataBias.objects.filter(level=str(level))
+
+    if len(db) > 0:
+        databias = db[0]
+    else:
+        databias = DataBias()
+        databias.level = str(level)
+
+    databias.bias = bias
+    databias.save()
+
 
     data = {
         'data_bobot': data_bobot,

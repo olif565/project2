@@ -2,6 +2,7 @@ from django import forms
 from django.forms import TextInput
 
 from .models import Data
+from .models import DataTesting
 
 
 class DataForm(forms.ModelForm):
@@ -10,10 +11,17 @@ class DataForm(forms.ModelForm):
         fields = "__all__"
 
 
+class DataTestingForm(forms.ModelForm):
+    class Meta:
+        model = DataTesting
+        fields = "__all__"
+
+
 class NormalisasiForm(forms.Form):
     sigma = forms.CharField(label='Sigma', required=True, max_length=100,
                             widget=TextInput(attrs={'type': 'number'}),
                             error_messages={'required': "Sigma"})
+
 
 class TrainingForm(forms.Form):
     lamda = forms.CharField(label='Lambda', required=True, max_length=100,
