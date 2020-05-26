@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 
 from home.forms import TrainingForm
+from home.models import Training
 from home.views import training
 import logging
 
@@ -14,7 +15,19 @@ class IndexView(ListView):
 
     def get_queryset(self, **kwargs):
 
-        form = TrainingForm()
+        try:
+            data = Training.objects.get(id='1')
+            if data is None:
+                form = TrainingForm()
+            else:
+                form = TrainingForm(initial={
+                    'lamda': data.lamda,
+                    'constant': data.constant,
+                    'gamma': data.gamma,
+                    'iterasi': data.iterasi
+                })
+        except Training.DoesNotExist:
+            form = TrainingForm()
 
         level = self.kwargs['level']
 
@@ -37,23 +50,49 @@ class IndexView(ListView):
 
         if form.is_valid():
             lamda = float(form.cleaned_data['lamda'])
-            # sigma = form.cleaned_data['sigma']
             constant = float(form.cleaned_data['constant'])
             gamma = float(form.cleaned_data['gamma'])
             iterasi = int(form.cleaned_data['iterasi'])
 
-            matriks = training.get_matriks(level, lamda)
+            try:
+                param = Training.objects.get(id='1')
+                s = param.sigma
+                if s is None or not s.strip():
+                    s = '2'
+            except Training.DoesNotExist:
+                param = Training()
+                param.id = '1'
+                s = '2'
+
+            param.sigma = s
+            param.lamda = lamda
+            param.constant = constant
+            param.gamma = gamma
+            param.iterasi = iterasi
+            param.save()
+
+            matriks = training.get_matriks(level, lamda, float(s))
             n_data_normalisasi = matriks['n_data_normalisasi']
+            n_list_data_kernel = matriks['n_list_data_kernel']
             n_list_data_matriks = matriks['n_list_data_matriks']
             n_list_data_matriks_view = matriks['n_list_data_matriks_view']
 
             data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+
+            data_bobot = []
+            bias = 0
+            if len(data_iterasi) > 0:
+                dt = training.get_bias(n_data_normalisasi, data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
+                data_bobot = dt['data_bobot']
+                bias = dt['bias']
 
             context = {
                 'level': level,
                 'n_data_normalisasi': n_data_normalisasi,
                 'n_list_data_matriks_view': n_list_data_matriks_view,
                 'data_iterasi': data_iterasi,
+                'data_bobot': data_bobot,
+                'bias': bias,
                 'display': 'block',
                 'form': form
             }

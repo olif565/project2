@@ -10,19 +10,22 @@ class DataForm(forms.ModelForm):
         fields = "__all__"
 
 
+class NormalisasiForm(forms.Form):
+    sigma = forms.CharField(label='Sigma', required=True, max_length=100,
+                            widget=TextInput(attrs={'type': 'number'}),
+                            error_messages={'required': "Sigma"})
+
 class TrainingForm(forms.Form):
     lamda = forms.CharField(label='Lambda', required=True, max_length=100,
-                                    widget=TextInput(attrs={'type': 'number'}),
-                                    error_messages={'required': "Lambda"})
-    # sigma = forms.CharField(label='Sigma', required=True, max_length=100,
-    #                         widget=TextInput(attrs={'type': 'number'}),
-    #                         error_messages={'required': "Sigma"})
+                             widget=TextInput(attrs={'type': 'number'}),
+                             error_messages={'required': "Lambda"})
     constant = forms.CharField(label='Constant', required=True, max_length=100,
-                            widget=TextInput(attrs={'type': 'number'}),
-                            error_messages={'required': "Constant"})
+                                widget=TextInput(attrs={'type': 'number'}),
+                                error_messages={'required': "Constant"})
     gamma = forms.CharField(label='Gamma', required=True, max_length=100,
-                               widget=TextInput(attrs={'type': 'number'}),
-                               error_messages={'required': "Gamma"})
+                             widget=TextInput(attrs={'type': 'number'}),
+                             error_messages={'required': "Gamma"})
     iterasi = forms.CharField(label='Iterasi', required=True, max_length=100,
-                            widget=TextInput(attrs={'type': 'number'}),
-                            error_messages={'required': "Iterasi"})
+                               widget=TextInput(attrs={'type': 'number'}),
+                               error_messages={'required': "Iterasi"})
+

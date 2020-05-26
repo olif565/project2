@@ -2,13 +2,13 @@ import math
 from home.views import normalisasi
 
 
-def get_kernel(level):
+def get_kernel(level, sigma):
 
     n_data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
     n_list_data_kernel_view = []
     n_list_data_kernel = []
 
-    s = 2
+    s = sigma
 
     for i, x in enumerate(n_data_normalisasi):
         n_data_kernel_view = []

@@ -1,13 +1,17 @@
 import math
+
+from home.models import Training
 from home.views import kernel
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-def get_matriks(level, lamda):
+def get_matriks(level, lamda, sigma):
 
-    datakernel = kernel.get_kernel(level)
+    s = sigma
+
+    datakernel = kernel.get_kernel(level, s)
     n_data_normalisasi = datakernel['n_data_normalisasi']
     n_list_data_kernel = datakernel['n_list_data_kernel']
     n_list_data_kernel_view = datakernel['n_list_data_kernel_view']
@@ -42,6 +46,7 @@ def get_matriks(level, lamda):
 
     data_kernel = {
         'n_data_normalisasi': n_data_normalisasi,
+        'n_list_data_kernel': n_list_data_kernel,
         'n_list_data_matriks': n_list_data_matriks,
         'n_list_data_matriks_view': n_list_data_matriks_view
     }
@@ -129,6 +134,7 @@ def get_delta_alfa(alpha, data_error_rate, constanta, gamma):
 
     return data_delta_alfa
 
+
 def get_alfa_baru(alpha, data_delta_alfa):
 
     data_alfa_baru = []
@@ -145,3 +151,58 @@ def get_alfa_baru(alpha, data_delta_alfa):
         data_alfa_baru.append(ab)
 
     return data_alfa_baru
+
+
+def get_bias(data_normalisasi, data_alpha, data_kernel):
+
+    alpha1 = []
+    alpha2 = []
+
+    for i, x in enumerate(data_alpha):
+        if data_normalisasi[i]['kelas'] == '1':
+            alpha1.append(x)
+        else:
+            alpha2.append(x)
+
+    index1 = data_alpha.index(max(alpha1))
+    index2 = data_alpha.index(max(alpha2))
+
+    kernel = [data_kernel[index1], data_kernel[index2]]
+
+    data_bobot = []
+
+    sum_w = []
+
+    for i, x in enumerate(kernel):
+
+        bobot = []
+
+        if  i == 0:
+            bobot.append('𝒘.𝒙+')
+        if  i == 1:
+            bobot.append('𝒘.𝒙-')
+
+        for j, y in enumerate(x):
+
+            w = int(data_normalisasi[j]['kelas']) * data_alpha[j] * kernel[i][j]
+            bobot.append(w)
+
+            print(j, data_alpha[j], kernel[i][j])
+
+        data_bobot.append(bobot)
+
+        print(sum(bobot[1:]))
+
+        sw = sum(bobot[1:])
+        sum_w.append(sw)
+
+    bias = -(sum(sum_w)) / 2
+
+    data = {
+        'data_bobot': data_bobot,
+        'bias': bias
+    }
+
+    return data
+
+
