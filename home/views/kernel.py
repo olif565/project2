@@ -1,10 +1,9 @@
 import math
-from home.views import normalisasi
 
 
-def get_kernel(level, sigma):
+def get_kernel(data_normalisasi, sigma):
 
-    n_data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
+    n_data_normalisasi = data_normalisasi
     n_list_data_kernel_view = []
     n_list_data_kernel = []
 

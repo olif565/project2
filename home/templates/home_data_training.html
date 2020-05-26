@@ -13,7 +13,7 @@
 
                     </div>
                     <div class="table-data__tool-right">
-                        <a href="{% url 'home:create' %}">   
+                        <a href="{% url 'home:create-training' %}">
                             <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                                 <i class="zmdi zmdi-plus"></i>add item
                             </button>
@@ -33,11 +33,11 @@
                     <tbody>
                     {% for data in data_list %}
                     <tr class="tr-shadow">
-                        <td><a href="{% url 'home:detail' data.pk %}"> {{ data.no }}</a></td>
+                        <td><a href="{% url 'home:detail-training' data.pk %}"> {{ data.no }}</a></td>
                         <td>{{ data.fault }}</td>
                         <td>
                             <div class="table-data-feature">
-                                <a href="{% url 'home:detail' data.pk %}">
+                                <a href="{% url 'home:detail-training' data.pk %}">
                                     <button class="item" data-toggle="tooltip" data-placement="top" title="Detail">
                                         <i class="zmdi zmdi-assignment"></i>
                                     </button>
@@ -59,9 +59,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
-            <div class="user-data__footer">
-                <button class="au-btn au-btn-load">load more</button>
             </div>
         </div>
         <!-- END DATA TRAINING-->

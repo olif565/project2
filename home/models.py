@@ -16,6 +16,43 @@ class Data(models.Model):
         return self.no
 
 
+class DataTraining(models.Model):
+    no = models.CharField("No", max_length=50, blank=True, null=True)
+    level = models.CharField("Level", max_length=50, blank=True, null=True)
+    persen_ch4 = models.CharField("%CH4", max_length=50, blank=True, null=True)
+    persen_c2h4 = models.CharField("%C2H4", max_length=50, blank=True, null=True)
+    persen_c2h2 = models.CharField("%C2H2", max_length=50, blank=True, null=True)
+    fault = models.CharField("Fault", max_length=50, blank=True, null=True)
+    kelas = models.CharField("Kelas", max_length=50, blank=True, null=True)
+    alpha = models.CharField("Alpha", max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    def __str__(self):
+        return self.no
+
+
+class DataBias(models.Model):
+    level = models.CharField("Level", max_length=50, blank=True, null=True)
+    bias = models.CharField("Bias", max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    def __str__(self):
+        return self.level
+
+
+class DataTesting(models.Model):
+    no = models.CharField("No", max_length=50, blank=True, null=True)
+    persen_ch4 = models.CharField("%CH4", max_length=50, blank=True, null=True)
+    persen_c2h4 = models.CharField("%C2H4", max_length=50, blank=True, null=True)
+    persen_c2h2 = models.CharField("%C2H2", max_length=50, blank=True, null=True)
+    fault = models.CharField("Fault", max_length=50, blank=True, null=True)
+    hasil = models.CharField("Hasil", max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    def __str__(self):
+        return self.no
+
+
 class Training(models.Model):
     id = models.IntegerField('id', primary_key=True)
     lamda = models.CharField('Lambda', max_length=100, blank=True, null=True)

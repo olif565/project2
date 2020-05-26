@@ -57,7 +57,7 @@ class IndexView(ListView):
             param.save()
 
             n_data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
-            n_list_data_kernel_view = kernel.get_kernel(level, float(sigma))['n_list_data_kernel_view']
+            n_list_data_kernel_view = kernel.get_kernel(n_data_normalisasi, float(sigma))['n_list_data_kernel_view']
 
             context = {
                 'level': level,

@@ -1,4 +1,4 @@
-from home.models import Data
+from home.models import Data, DataTraining
 from django.db.models import Q
 
 
@@ -124,6 +124,24 @@ def get_normalisasi(level):
             x['kelas'] = '-1'
 
     # End Normalisasi
+
+    # Save to DB
+    for i, x in enumerate(n_data_normalisasi):
+        data = DataTraining.objects.filter(no=str(i+1), level=str(level))
+
+        if len(data) > 0:
+            datatraining = data[0]
+        else:
+            datatraining = DataTraining()
+            datatraining.no = str(i+1)
+            datatraining.level = str(level)
+
+        datatraining.persen_ch4 = x['persen_ch4']
+        datatraining.persen_c2h4 = x['persen_c2h4']
+        datatraining.persen_c2h2 = x['persen_c2h2']
+        datatraining.fault = x['fault']
+        datatraining.kelas = x['kelas']
+        datatraining.save()
 
     data_normalisasi = {
         'n_data_normalisasi': n_data_normalisasi
