@@ -199,13 +199,15 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
     bias = -(sum(sum_w)) / 2
 
     # Save Alpha to DB
-    for i, x in enumerate(data_alpha):
-        db = DataTraining.objects.filter(no=str(i + 1), level=str(level))
+    for i in range(6):
+        level = i+1
+        for y, x in enumerate(data_alpha):
+            db = DataTraining.objects.filter(no=str(y + 1), level=str(level))
 
-        if len(db) > 0:
-            datatraining = db[0]
-            datatraining.alpha = x
-            datatraining.save()
+            if len(db) > 0:
+                datatraining = db[0]
+                datatraining.alpha = x
+                datatraining.save()
 
     # Save Bias to DB
     db = DataBias.objects.filter(level=str(level))
@@ -218,7 +220,6 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
 
     databias.bias = bias
     databias.save()
-
 
     data = {
         'data_bobot': data_bobot,

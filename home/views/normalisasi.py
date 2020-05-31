@@ -4,6 +4,21 @@ from django.db.models import Q
 
 def get_normalisasi(level):
 
+    n_data_normalisasi = proses_normalisasi(level)
+
+    # Save to DB
+    for i in range(6):
+        level = i+1
+        save_to_db(proses_normalisasi(level), level)
+
+    data_normalisasi = {
+        'n_data_normalisasi': n_data_normalisasi
+    }
+
+    return data_normalisasi
+
+
+def proses_normalisasi(level):
     # D1 kelas 1
     # D2 kelas 2
     # DT kelas 3
@@ -125,15 +140,19 @@ def get_normalisasi(level):
 
     # End Normalisasi
 
-    # Save to DB
+    return n_data_normalisasi
+
+
+def save_to_db(n_data_normalisasi, level):
+
     for i, x in enumerate(n_data_normalisasi):
-        data = DataTraining.objects.filter(no=str(i+1), level=str(level))
+        data = DataTraining.objects.filter(no=str(i + 1), level=str(level))
 
         if len(data) > 0:
             datatraining = data[0]
         else:
             datatraining = DataTraining()
-            datatraining.no = str(i+1)
+            datatraining.no = str(i + 1)
             datatraining.level = str(level)
 
         datatraining.persen_ch4 = x['persen_ch4']
@@ -142,9 +161,3 @@ def get_normalisasi(level):
         datatraining.fault = x['fault']
         datatraining.kelas = x['kelas']
         datatraining.save()
-
-    data_normalisasi = {
-        'n_data_normalisasi': n_data_normalisasi
-    }
-
-    return data_normalisasi

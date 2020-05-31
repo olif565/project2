@@ -21,18 +21,38 @@ class IndexView(ListView):
             data = Training.objects.get(id='1')
             if data is None:
                 form = NormalisasiForm()
+                sigma = None
             else:
                 form = NormalisasiForm(initial={'sigma': data.sigma})
+                sigma = data.sigma
         except Training.DoesNotExist:
             form = NormalisasiForm()
+            sigma = None
 
         level = self.kwargs['level']
 
+        n_data_normalisasi = []
+        n_list_data_kernel_view = []
+
+        if level == 1:
+            display_form = 'block'
+            display_result = 'none'
+        else:
+            display_form = 'none'
+
+            if sigma is not None:
+                display_result = 'block'
+                n_data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
+                n_list_data_kernel_view = kernel.get_kernel(n_data_normalisasi, float(sigma))['n_list_data_kernel_view']
+            else:
+                display_result = 'none'
+
         context = {
             'level': level,
-            'n_data_normalisasi': [],
-            'n_list_data_kernel_view': [],
-            'display': 'none',
+            'n_data_normalisasi': n_data_normalisasi,
+            'n_list_data_kernel_view': n_list_data_kernel_view,
+            'display_form': display_form,
+            'display_result': display_result,
             'form': form
         }
 
@@ -63,7 +83,8 @@ class IndexView(ListView):
                 'level': level,
                 'n_data_normalisasi': n_data_normalisasi,
                 'n_list_data_kernel_view': n_list_data_kernel_view,
-                'display': 'block',
+                'display_form': 'block',
+                'display_result': 'block',
                 'form': form
             }
 
