@@ -14,7 +14,7 @@ class DataForm(forms.ModelForm):
 class DataTestingForm(forms.ModelForm):
     class Meta:
         model = DataTesting
-        fields = "__all__"
+        fields = ['no', 'persen_ch4', 'persen_c2h4', 'persen_c2h2', 'hasil']
 
 
 class NormalisasiForm(forms.Form):

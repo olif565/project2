@@ -1,0 +1,8 @@
+#Database
+#db/
+
+#Virtual Environment
+#venv/
+
+.idea/
+*.pyc
