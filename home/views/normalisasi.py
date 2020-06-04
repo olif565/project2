@@ -1,4 +1,4 @@
-from home.models import Data, DataTraining
+from home.models import Data, HasilTraining
 from django.db.models import Q
 
 
@@ -146,18 +146,18 @@ def proses_normalisasi(level):
 def save_to_db(n_data_normalisasi, level):
 
     for i, x in enumerate(n_data_normalisasi):
-        data = DataTraining.objects.filter(no=str(i + 1), level=str(level))
+        data = HasilTraining.objects.filter(no=str(i + 1), level=str(level))
 
         if len(data) > 0:
             datatraining = data[0]
         else:
-            datatraining = DataTraining()
+            datatraining = HasilTraining()
             datatraining.no = str(i + 1)
             datatraining.level = str(level)
 
-        datatraining.persen_ch4 = x['persen_ch4']
-        datatraining.persen_c2h4 = x['persen_c2h4']
-        datatraining.persen_c2h2 = x['persen_c2h2']
+        datatraining.n_ch4 = x['persen_ch4']
+        datatraining.n_c2h4 = x['persen_c2h4']
+        datatraining.n_c2h2 = x['persen_c2h2']
         datatraining.fault = x['fault']
         datatraining.kelas = x['kelas']
         datatraining.save()

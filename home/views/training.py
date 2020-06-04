@@ -1,7 +1,7 @@
 import logging
 import math
 
-from home.models import DataTraining, DataBias
+from home.models import DataBias, HasilTraining
 from home.views import kernel
 
 logger = logging.getLogger(__name__)
@@ -202,7 +202,7 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
     for i in range(6):
         level = i+1
         for y, x in enumerate(data_alpha):
-            db = DataTraining.objects.filter(no=str(y + 1), level=str(level))
+            db = HasilTraining.objects.filter(no=str(y + 1), level=str(level))
 
             if len(db) > 0:
                 datatraining = db[0]
