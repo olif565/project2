@@ -71,30 +71,48 @@ class IndexView(ListView):
             param.iterasi = iterasi
             param.save()
 
-            data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
+            # Save to DB
+            normalisasi.save_normalisasi_to_db()
 
-            matriks = training.get_matriks(data_normalisasi, lamda, float(s))
-            n_data_normalisasi = matriks['n_data_normalisasi']
-            n_list_data_kernel = matriks['n_list_data_kernel']
-            n_list_data_matriks = matriks['n_list_data_matriks']
-            n_list_data_matriks_view = matriks['n_list_data_matriks_view']
+            l_n_data_normalisasi = []
+            l_n_list_data_matriks_view = []
+            l_data_iterasi = []
+            l_data_bobot = []
+            l_bias = 0
 
-            data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+            for i in range(6):
+                lv = i + 1
+                data_normalisasi = normalisasi.get_normalisasi(lv)['n_data_normalisasi']
 
-            data_bobot = []
-            bias = 0
-            if len(data_iterasi) > 0:
-                dt = training.get_bias(level, n_data_normalisasi, data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
-                data_bobot = dt['data_bobot']
-                bias = dt['bias']
+                matriks = training.get_matriks(data_normalisasi, lamda, float(s))
+                n_data_normalisasi = matriks['n_data_normalisasi']
+                n_list_data_kernel = matriks['n_list_data_kernel']
+                n_list_data_matriks = matriks['n_list_data_matriks']
+                n_list_data_matriks_view = matriks['n_list_data_matriks_view']
+
+                data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+
+                data_bobot = []
+                bias = 0
+                if len(data_iterasi) > 0:
+                    dt = training.get_bias(lv, n_data_normalisasi, data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
+                    data_bobot = dt['data_bobot']
+                    bias = dt['bias']
+
+                if i == level:
+                    l_n_data_normalisasi = n_data_normalisasi
+                    l_n_list_data_matriks_view = n_list_data_matriks_view
+                    l_data_iterasi = data_iterasi
+                    l_data_bobot = data_bobot
+                    l_bias = bias
 
             context = {
                 'level': level,
-                'n_data_normalisasi': n_data_normalisasi,
-                'n_list_data_matriks_view': n_list_data_matriks_view,
-                'data_iterasi': data_iterasi,
-                'data_bobot': data_bobot,
-                'bias': bias,
+                'n_data_normalisasi': l_n_data_normalisasi,
+                'n_list_data_matriks_view': l_n_list_data_matriks_view,
+                'data_iterasi': l_data_iterasi,
+                'data_bobot': l_data_bobot,
+                'bias': l_bias,
                 'display': 'block',
                 'form': form
             }

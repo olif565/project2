@@ -177,9 +177,9 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
 
         bobot = []
 
-        if  i == 0:
+        if i == 0:
             bobot.append('𝒘.𝒙+')
-        if  i == 1:
+        if i == 1:
             bobot.append('𝒘.𝒙-')
 
         for j, y in enumerate(x):
@@ -199,15 +199,13 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
     bias = -(sum(sum_w)) / 2
 
     # Save Alpha to DB
-    for i in range(6):
-        level = i+1
-        for y, x in enumerate(data_alpha):
-            db = HasilTraining.objects.filter(no=str(y + 1), level=str(level))
+    for y, x in enumerate(data_alpha):
+        db = HasilTraining.objects.filter(no=str(y + 1), level=str(level))
 
-            if len(db) > 0:
-                datatraining = db[0]
-                datatraining.alpha = x
-                datatraining.save()
+        if len(db) > 0:
+            datatraining = db[0]
+            datatraining.alpha = x
+            datatraining.save()
 
     # Save Bias to DB
     db = DataBias.objects.filter(level=str(level))
