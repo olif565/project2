@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from home.models import DataTesting
 from home.forms import DataTestingForm
+from home.views import testing
 from django.views.generic import ListView, DetailView
 
 
@@ -31,6 +32,10 @@ def create(request):
         form = DataTestingForm(request.POST)
         if form.is_valid():
             form.save()
+
+            # Testing
+            testing.proses_training()
+
             return redirect('home:data-testing')
     form = DataTestingForm()
 
@@ -42,6 +47,10 @@ def edit(request, pk, template_name='edit.html'):
     form = DataTestingForm(request.POST or None, instance=data)
     if form.is_valid():
         form.save()
+
+        # Testing
+        testing.proses_training()
+
         return redirect('home:data-testing')
     return render(request, template_name, {'form': form})
 

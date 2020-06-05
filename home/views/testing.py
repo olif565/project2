@@ -1,6 +1,7 @@
 import math
+import numpy as np
 
-from home.models import DataTesting, HasilTraining, Training
+from home.models import DataTesting, HasilTraining, Training, DataBias
 
 
 def proses_training():
@@ -9,23 +10,61 @@ def proses_training():
     data_training = get_data_training()
     sigma = get_sigma()
 
+    # print(data_testing)
+
+    datalevel = {
+        1: 'D1',
+        2: 'D2',
+        3: 'DT',
+        4: 'T3',
+        5: 'T2',
+        6: 'T1',
+        7: 'PD'
+    }
+
     for i, x in enumerate(data_testing):
 
-        data_alpha = []
+        hasil = ''
 
-        for j, y in enumerate(data_training):
+        for lvl in range(5):
 
-            n1 = math.pow((x['persen_ch4'] - y['n_ch4']), 2)
-            n2 = math.pow((x['persen_c2h4'] - y['n_c2h4']), 2)
-            n3 = math.pow((x['persen_c2h2'] - y['n_c2h2']), 2)
+            db = DataBias.objects.filter(level=str(lvl + 1))
 
-            k = math.exp((-(n1 + n2 + n3)) / (2 * (math.pow(sigma, 2))))
+            bias = 0
+            if len(db) > 0:
+                bias = float(db[0].bias)
 
-            a = float(y['alpha']) * float(y['kelas']) * k
+            data_alpha = []
 
-            data_alpha.append(a)
+            for j, y in enumerate(data_training):
+                n1 = math.pow((float(x['persen_ch4']) - float(y['n_ch4'])), 2)
+                n2 = math.pow((float(x['persen_c2h4']) - float(y['n_c2h4'])), 2)
+                n3 = math.pow((float(x['persen_c2h2']) - float(y['n_c2h2'])), 2)
 
+                k = math.exp((-(n1 + n2 + n3)) / (2 * (math.pow(float(sigma), 2))))
 
+                a = float(y['alpha']) * float(y['kelas']) * k
+
+                # print(k)
+                # print(a)
+
+                data_alpha.append(a)
+
+            sum_data_alpha = sum(data_alpha)
+
+            f = sum_data_alpha + bias
+
+            fk = np.sign(f)
+
+            if fk == 1:
+                hasil = datalevel.get(lvl+1)
+                break
+
+        db = DataTesting.objects.filter(no=str(x['no']))
+        if len(db) > 0:
+            dt = db[0]
+            dt.hasil = hasil
+            dt.save()
 
 
 def get_data_testing():
