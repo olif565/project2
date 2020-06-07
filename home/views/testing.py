@@ -62,6 +62,10 @@ def proses_training():
                 hasil = datalevel.get(level)
                 break
 
+            if level == 6 and fk == -1:
+                hasil = datalevel.get(7)
+                break
+
         db = DataTesting.objects.filter(no=str(x['no']))
         if len(db) > 0:
             dt = db[0]
