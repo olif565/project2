@@ -99,7 +99,7 @@ class IndexView(ListView):
                     data_bobot = dt['data_bobot']
                     bias = dt['bias']
 
-                if i == level:
+                if lv == level:
                     l_n_data_normalisasi = n_data_normalisasi
                     l_n_list_data_matriks_view = n_list_data_matriks_view
                     l_data_iterasi = data_iterasi

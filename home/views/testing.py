@@ -7,7 +7,6 @@ from home.models import DataTesting, HasilTraining, Training, DataBias
 def proses_training():
 
     data_testing = get_data_testing()
-    data_training = get_data_training()
     sigma = get_sigma()
 
     # print(data_testing)
@@ -26,9 +25,13 @@ def proses_training():
 
         hasil = ''
 
-        for lvl in range(5):
+        for lvl in range(6):
 
-            db = DataBias.objects.filter(level=str(lvl + 1))
+            level = lvl + 1
+
+            data_training = get_data_training(level)
+
+            db = DataBias.objects.filter(level=str(level))
 
             bias = 0
             if len(db) > 0:
@@ -37,16 +40,13 @@ def proses_training():
             data_alpha = []
 
             for j, y in enumerate(data_training):
-                n1 = math.pow((float(x['persen_ch4']) - float(y['n_ch4'])), 2)
-                n2 = math.pow((float(x['persen_c2h4']) - float(y['n_c2h4'])), 2)
-                n3 = math.pow((float(x['persen_c2h2']) - float(y['n_c2h2'])), 2)
+                n1 = math.pow((float(y['n_ch4']) - float(x['persen_ch4'])), 2)
+                n2 = math.pow((float(y['n_c2h4']) - float(x['persen_c2h4'])), 2)
+                n3 = math.pow((float(y['n_c2h2']) - float(x['persen_c2h2'])), 2)
 
                 k = math.exp((-(n1 + n2 + n3)) / (2 * (math.pow(float(sigma), 2))))
 
                 a = float(y['alpha']) * float(y['kelas']) * k
-
-                # print(k)
-                # print(a)
 
                 data_alpha.append(a)
 
@@ -56,8 +56,10 @@ def proses_training():
 
             fk = np.sign(f)
 
+            print(str(x['no']) + " ~ " + str(level) + " ~ " + str(sum_data_alpha) + " ~ " + str(f))
+
             if fk == 1:
-                hasil = datalevel.get(lvl+1)
+                hasil = datalevel.get(level)
                 break
 
         db = DataTesting.objects.filter(no=str(x['no']))
@@ -118,9 +120,9 @@ def get_data_testing():
     return n_data_normalisasi
 
 
-def get_data_training():
+def get_data_training(level):
 
-    db = HasilTraining.objects.all()
+    db = HasilTraining.objects.filter(level=level)
     data_training = []
 
     for x in db:
