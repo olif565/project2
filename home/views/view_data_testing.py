@@ -91,7 +91,7 @@ def save_excel_to_db(data_excel):
         if len(sheet) > 1:  # data sheet
             for data in sheet:
                 if len(data) > 0:  # check row tidak kosong
-                    if data[0] != 'no':  # check bukan header
+                    if str(data[0]).lower() != 'no':  # check bukan header
 
                         # Check jika ada data yg kosong
                         if len(data) < 5:
