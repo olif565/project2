@@ -104,8 +104,6 @@ def save_excel_to_db(data_excel):
                         no = data[0]
                         db = DataTesting.objects.filter(no=str(no))
 
-                        print(no)
-
                         if len(db) == 0:
                             DataTesting.objects.create(
                                 no=data[0],
