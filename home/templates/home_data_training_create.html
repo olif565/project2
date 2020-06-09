@@ -24,8 +24,8 @@
                     </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fa fa-dot-circle-o"></i> Submit
-                </button>
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
                 </form>
             </div>
         </div>
@@ -34,21 +34,15 @@
                 <strong>Import</strong> Data
             </div>
             <div class="card-body card-block">
-                <form action="" method="post" class="form-inline">
+                <form action="" method="post" class="form-inline" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="file-input" class=" form-control-label">File input</label>
-                        </div>
                         <div class="col-12 col-md-9">
-                            <input type="file" id="file-input" name="file-input" class="form-control-file">
+                            <input type="file" id="file-excel" name="file-excel" class="form-control-file">
                         </div>
                     </div>
+                    <input type="submit" name="input_excel" class="btn btn-primary btn-sm" value="Submit">
                 </form>
-            </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fa fa-dot-circle-o"></i> Submit
-                </button>
             </div>
         </div>
     </div>

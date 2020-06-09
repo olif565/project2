@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'account.apps.AccountConfig',
     'home.apps.HomeConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

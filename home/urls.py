@@ -16,25 +16,25 @@ Including another URLconf
 
 from django.urls import path
 
-from home.views import view_data, view_data_testing, view_normalisasi, view_training
+from home.views import view_data_training, view_data_testing, view_normalisasi, view_training
 
 app_name = 'home'
 
 urlpatterns = [
-    path('', view_data.dashboard, name='index'),
-    path('data-training', view_data.IndexView.as_view(), name='data-training'),
+    path('', view_data_training.dashboard, name='index'),
+    path('data-training', view_data_training.IndexView.as_view(), name='data-training'),
     path('data-testing', view_data_testing.IndexView.as_view(), name='data-testing'),
-    
-    path('detail-training/<int:pk>/', view_data.DataDetailView.as_view(), name='detail-training'),
+
+    path('detail-training/<int:pk>/', view_data_training.DataDetailView.as_view(), name='detail-training'),
     path('detail-testing/<int:pk>/', view_data_testing.DataDetailView.as_view(), name='detail-testing'),
     
-    path('edit-training/<int:pk>/', view_data.edit, name='edit-training'),
+    path('edit-training/<int:pk>/', view_data_training.edit, name='edit-training'),
     path('edit-testing/<int:pk>/', view_data_testing.edit, name='edit-testing'),
     
-    path('create-training/', view_data.create, name='create-training'),
+    path('create-training/', view_data_training.create, name='create-training'),
     path('create-testing/', view_data_testing.create, name='create-testing'),
    
-    path('delete-training/<int:pk>/', view_data.delete, name = 'delete-training'),
+    path('delete-training/<int:pk>/', view_data_training.delete, name ='delete-training'),
     path('delete-testing/<int:pk>/', view_data_testing.delete, name='delete-testing'),
 
     path('normalisasi/<int:level>/', view_normalisasi.IndexView.as_view(), name='normalisasi'),
