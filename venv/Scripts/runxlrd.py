@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #!d:\skripsiapp\project3\venv\scripts\python.exe
-=======
-#!D:\SkripsiApp\SkripsiFix\venv\Scripts\python.exe
->>>>>>> dd16a89c4f57b3e3e1d70526ad617ed7b3203752
 # Copyright (c) 2005-2012 Stephen John Machin, Lingfo Pty Ltd
 # This script is part of the xlrd package, which is released under a
 # BSD-style licence.

@@ -1,4 +1,4 @@
-#!D:\SkripsiApp\SkripsiFix\venv\Scripts\python.exe
+#!d:\skripsiapp\project3\venv\scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":
