@@ -105,4 +105,3 @@ class IndexView(ListView):
             }
 
             return render(request, self.template_name, {self.context_object_name: context})
-

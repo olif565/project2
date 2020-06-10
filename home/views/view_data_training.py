@@ -111,4 +111,3 @@ def save_excel_to_db(data_excel):
                             dt.persen_c2h2 = data[3]
                             dt.fault = data[4]
                             dt.save()
-

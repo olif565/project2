@@ -225,5 +225,3 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
     }
 
     return data
-
-
