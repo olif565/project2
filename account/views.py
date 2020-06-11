@@ -45,7 +45,7 @@ def signup_view(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('home:home_view')
+            return redirect('home:data-training')
 
     form = SignUpForm()
     return render(request, 'signup.html', {'form': form})

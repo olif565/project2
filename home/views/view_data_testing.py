@@ -50,6 +50,10 @@ def create(request):
 
             if data is not None:
                 save_excel_to_db(data)
+
+                # Testing
+                testing.proses_testing()
+
                 return redirect('home:data-testing')
         else:
             form = DataTestingForm(request.POST)
@@ -57,7 +61,7 @@ def create(request):
                 form.save()
 
                 # Testing
-                testing.proses_training()
+                testing.proses_testing()
 
                 return redirect('home:data-testing')
 
@@ -71,7 +75,7 @@ def edit(request, pk, template_name='edit.html'):
         form.save()
 
         # Testing
-        testing.proses_training()
+        testing.proses_testing()
 
         return redirect('home:data-testing')
     return render(request, template_name, {'form': form})

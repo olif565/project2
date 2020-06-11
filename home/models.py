@@ -63,3 +63,19 @@ class Training(models.Model):
 
     def __str__(self):
         return self.id
+
+
+class Diagnosis(models.Model):
+    no = models.CharField("No", max_length=50, blank=False, null=True)
+    f1 = models.CharField("f1", max_length=50, blank=False, null=True)
+    f2 = models.CharField("f2", max_length=50, blank=False, null=True)
+    f3 = models.CharField("f3", max_length=50, blank=False, null=True)
+    f4 = models.CharField("f4", max_length=50, blank=False, null=True)
+    f5 = models.CharField("f5", max_length=50, blank=False, null=True)
+    f6 = models.CharField("f6", max_length=50, blank=False, null=True)
+    hasil = models.CharField("Hasil", max_length=50, blank=True, null=True)
+    aktual = models.CharField("Aktual", max_length=50, blank=False, null=True)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    def __str__(self):
+        return self.no

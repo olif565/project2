@@ -1,10 +1,10 @@
 import math
 import numpy as np
 
-from home.models import DataTesting, HasilTraining, Training, DataBias
+from home.models import DataTesting, HasilTraining, Training, DataBias, Diagnosis
 
 
-def proses_training():
+def proses_testing():
 
     data_testing = get_data_testing()
     sigma = get_sigma()
@@ -56,15 +56,54 @@ def proses_training():
 
             fk = np.sign(f)
 
+            # Save klasifikasi to DB
+            data_db = Diagnosis.objects.filter(no=str(x['no']))
+            if len(data_db) > 0:
+                dd = data_db[0]
+            else:
+                dd = Diagnosis()
+                dd.no = str(x['no'])
+
+            if level == 1:
+                dd.f1 = f
+            if level == 2:
+                dd.f2 = f
+            if level == 3:
+                dd.f3 = f
+            if level == 4:
+                dd.f4 = f
+            if level == 5:
+                dd.f5 = f
+            if level == 6:
+                dd.f6 = f
+
+            aktual = ''
+            data_db = DataTesting.objects.filter(no=str(x['no']))
+            if len(data_db) > 0:
+                aktual = data_db[0].fault
+
             print(str(x['no']) + " ~ " + str(level) + " ~ " + str(sum_data_alpha) + " ~ " + str(f))
 
             if fk == 1:
                 hasil = datalevel.get(level)
+                h = '1 di level ' + str(level) + ' = ' + hasil
+
+                dd.hasil = h
+                dd.aktual = aktual
+                dd.save()
                 break
 
-            if level == 6 and fk == -1:
+            elif level == 6 and fk == -1:
                 hasil = datalevel.get(7)
-                break
+                h = '-1 di level ' + str(level) + ' = ' + hasil
+
+                dd.hasil = h
+                dd.aktual = aktual
+                dd.save()
+
+            else:
+                dd.aktual = aktual
+                dd.save()
 
         db = DataTesting.objects.filter(no=str(x['no']))
         if len(db) > 0:

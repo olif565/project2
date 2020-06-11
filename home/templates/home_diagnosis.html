@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!-- DATA TRAINING-->
+        <div class="user-data m-b-30">
+            <h3 class="title-3 m-b-30"><i class="zmdi zmdi-assignment"></i>DIAGNOSIS</h3>
+            <div class="table-responsive table-data">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>no</td>
+                            <td>𝒇1(𝒙)</td>
+                            <td>Fungsi Klasifikasi 𝒇1(𝒙)</td>
+                            <td>𝒇2(𝒙)</td>
+                            <td>Fungsi Klasifikasi 𝒇2(𝒙)</td>
+                            <td>𝒇3(𝒙)</td>
+                            <td>Fungsi Klasifikasi 𝒇3(𝒙)</td>
+                            <td>𝒇4(𝒙)</td>
+                            <td>Fungsi Klasifikasi 𝒇4(𝒙)</td>
+                            <td>𝒇5(𝒙)</td>
+                            <td>Fungsi Klasifikasi 𝒇5(𝒙)</td>
+                            <td>𝒇6(𝒙)</td>
+                            <td>Fungsi Klasifikasi 𝒇6(𝒙)</td>
+                            <td>Hasil Klasifikasi</td>
+                            <td>Kelas Aktual</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for dt in data_list.data %}
+                    <tr class="tr-shadow">
+                        <td>{{ dt.no }}</td>
+                        <td>{{ dt.f1 }}</td>
+                        <td>{{ dt.fk1 }}</td>
+                        <td>{{ dt.f2 }}</td>
+                        <td>{{ dt.fk2 }}</td>
+                        <td>{{ dt.f3 }}</td>
+                        <td>{{ dt.fk3 }}</td>
+                        <td>{{ dt.f4 }}</td>
+                        <td>{{ dt.fk4 }}</td>
+                        <td>{{ dt.f5 }}</td>
+                        <td>{{ dt.fk5 }}</td>
+                        <td>{{ dt.f6 }}</td>
+                        <td>{{ dt.fk6 }}</td>
+                        <td>{{ dt.hasil }}</td>
+                        <td>{{ dt.aktual }}</td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END DATA TRAINING-->
+    </div>
+</div>
+
+{% endblock %}
