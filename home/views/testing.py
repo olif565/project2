@@ -88,8 +88,13 @@ def proses_testing():
                 hasil = datalevel.get(level)
                 h = '1 di level ' + str(level) + ' = ' + hasil
 
+                akurasi = 0
+                if hasil == aktual:
+                    akurasi = 1
+
                 dd.hasil = h
                 dd.aktual = aktual
+                dd.akurasi = akurasi
                 dd.save()
                 break
 
@@ -99,10 +104,12 @@ def proses_testing():
 
                 dd.hasil = h
                 dd.aktual = aktual
+                dd.akurasi = 0
                 dd.save()
 
             else:
                 dd.aktual = aktual
+                dd.akurasi = 0
                 dd.save()
 
         db = DataTesting.objects.filter(no=str(x['no']))

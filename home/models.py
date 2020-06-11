@@ -75,6 +75,7 @@ class Diagnosis(models.Model):
     f6 = models.CharField("f6", max_length=50, blank=False, null=True)
     hasil = models.CharField("Hasil", max_length=50, blank=True, null=True)
     aktual = models.CharField("Aktual", max_length=50, blank=False, null=True)
+    akurasi = models.CharField("Akurasi", max_length=50, blank=False, null=True)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
 
     def __str__(self):
