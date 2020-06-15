@@ -46,7 +46,7 @@ class IndexView(ListView):
                 n_list_data_kernel_view = kernel.get_kernel(n_data_normalisasi, float(sigma))['n_list_data_kernel_view']
 
                 # Save to DB
-                normalisasi.save_normalisasi_to_db()
+                # normalisasi.save_normalisasi_to_db()
             else:
                 display_result = 'none'
 
@@ -100,7 +100,8 @@ class IndexView(ListView):
                 'level': level,
                 'n_data_normalisasi': [],
                 'n_list_data_kernel_view': [],
-                'display': 'none',
+                'display_form': 'block',
+                'display_result': 'none',
                 'form': form
             }
 

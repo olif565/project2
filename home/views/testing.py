@@ -25,7 +25,7 @@ def proses_testing():
 
         hasil = ''
 
-        for lvl in range(6):
+        for lvl in range(7):
 
             level = lvl + 1
 
@@ -76,6 +76,8 @@ def proses_testing():
                 dd.f5 = f
             if level == 6:
                 dd.f6 = f
+            if level == 7:
+                dd.f7 = f
 
             aktual = ''
             data_db = DataTesting.objects.filter(no=str(x['no']))
@@ -98,14 +100,14 @@ def proses_testing():
                 dd.save()
                 break
 
-            elif level == 6 and fk == -1:
-                hasil = datalevel.get(7)
-                h = '-1 di level ' + str(level) + ' = ' + hasil
-
-                dd.hasil = h
-                dd.aktual = aktual
-                dd.akurasi = 0
-                dd.save()
+            # elif level == 6 and fk == -1:
+            #     hasil = datalevel.get(7)
+            #     h = '-1 di level ' + str(level) + ' = ' + hasil
+            #
+            #     dd.hasil = h
+            #     dd.aktual = aktual
+            #     dd.akurasi = 0
+            #     dd.save()
 
             else:
                 dd.aktual = aktual

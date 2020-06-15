@@ -15,7 +15,7 @@ def get_normalisasi(level):
 
 def save_normalisasi_to_db():
     # Save to DB
-    for i in range(6):
+    for i in range(7):
         level = i + 1
         save_to_db(proses_normalisasi(level), level)
 

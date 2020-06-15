@@ -19,7 +19,20 @@ class IndexView(ListView):
             data = Training.objects.get(id='1')
             if data is None:
                 form = TrainingForm()
+                lamda = None
+                constant = None
+                gamma = None
+                iterasi = None
+                s = '2'
             else:
+                lamda = float(data.lamda)
+                constant = float(data.constant)
+                gamma = float(data.gamma)
+                iterasi = int(data.iterasi)
+                s = data.sigma
+                if s is None or not s.strip():
+                    s = '2'
+
                 form = TrainingForm(initial={
                     'lamda': data.lamda,
                     'constant': data.constant,
@@ -28,15 +41,56 @@ class IndexView(ListView):
                 })
         except Training.DoesNotExist:
             form = TrainingForm()
+            lamda = None
+            constant = None
+            gamma = None
+            iterasi = None
+            s = '2'
 
         level = self.kwargs['level']
 
+        n_data_normalisasi = []
+        n_list_data_matriks_view = []
+        data_iterasi = []
+        data_bobot = []
+        bias = 0
+
+        if level == 1:
+            display_form = 'block'
+            display_result = 'none'
+        else:
+            display_form = 'none'
+
+            if lamda is not None and constant is not None and gamma is not None and iterasi is not None:
+                display_result = 'block'
+
+                data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
+
+                matriks = training.get_matriks(data_normalisasi, lamda, float(s))
+                n_data_normalisasi = matriks['n_data_normalisasi']
+                n_list_data_kernel = matriks['n_list_data_kernel']
+                n_list_data_matriks = matriks['n_list_data_matriks']
+                n_list_data_matriks_view = matriks['n_list_data_matriks_view']
+
+                data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+
+                if len(data_iterasi) > 0:
+                    dt = training.get_bias(level, n_data_normalisasi,
+                                           data_iterasi[len(data_iterasi) - 1]['data_alfa_baru'], n_list_data_kernel)
+                    data_bobot = dt['data_bobot']
+                    bias = dt['bias']
+            else:
+                display_result = 'none'
+
         context = {
             'level': level,
-            'n_data_normalisasi': [],
-            'n_list_data_matriks_view': [],
-            'data_iterasi': [],
-            'display': 'none',
+            'n_data_normalisasi': n_data_normalisasi,
+            'n_list_data_matriks_view': n_list_data_matriks_view,
+            'data_iterasi': data_iterasi,
+            'data_bobot': data_bobot,
+            'bias': bias,
+            'display_form': display_form,
+            'display_result': display_result,
             'form': form
         }
 
@@ -80,7 +134,7 @@ class IndexView(ListView):
             l_data_bobot = []
             l_bias = 0
 
-            for i in range(6):
+            for i in range(7):
                 lv = i + 1
                 data_normalisasi = normalisasi.get_normalisasi(lv)['n_data_normalisasi']
 
@@ -113,7 +167,8 @@ class IndexView(ListView):
                 'data_iterasi': l_data_iterasi,
                 'data_bobot': l_data_bobot,
                 'bias': l_bias,
-                'display': 'block',
+                'display_form': 'block',
+                'display_result': 'block',
                 'form': form
             }
 
@@ -124,7 +179,8 @@ class IndexView(ListView):
                 'n_data_normalisasi': [],
                 'n_list_data_matriks_view': [],
                 'data_iterasi': [],
-                'display': 'none',
+                'display_form': 'block',
+                'display_result': 'none',
                 'form': form
             }
 

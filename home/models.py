@@ -73,6 +73,7 @@ class Diagnosis(models.Model):
     f4 = models.CharField("f4", max_length=50, blank=False, null=True)
     f5 = models.CharField("f5", max_length=50, blank=False, null=True)
     f6 = models.CharField("f6", max_length=50, blank=False, null=True)
+    f7 = models.CharField("f7", max_length=50, blank=False, null=True)
     hasil = models.CharField("Hasil", max_length=50, blank=True, null=True)
     aktual = models.CharField("Aktual", max_length=50, blank=False, null=True)
     akurasi = models.CharField("Akurasi", max_length=50, blank=False, null=True)
