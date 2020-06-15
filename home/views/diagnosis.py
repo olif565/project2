@@ -53,6 +53,13 @@ def get_diagnosis():
             f6 = '-'
             fk6 = '-'
 
+        if x.f7 is not None:
+            f7 = float(x.f7)
+            fk7 = int(np.sign(f7))
+        else:
+            f7 = '-'
+            fk7 = '-'
+
         d = {
             'no': x.no,
             'f1': f1,
@@ -67,6 +74,8 @@ def get_diagnosis():
             'fk5': fk5,
             'f6': f6,
             'fk6': fk6,
+            'f7': f7,
+            'fk7': fk7,
             'hasil': x.hasil,
             'aktual': x.aktual
         }
