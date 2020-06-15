@@ -11,6 +11,7 @@
                         NORMALISASI DAN KERNEL 
                     </button>
                 </a>
+                &nbsp;
                 <a href="{% url 'home:training' data.level %}">
                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                         MATRIKS HESSIAN
@@ -60,23 +61,23 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="text-align: center; padding-left: 0px; padding-right: 30px">no</th>
+                            <th style="text-align: center; padding-left: 15px; padding-right: 30px">no</th>
                             <th style="text-align: left; padding-left: 0px">%CH4</th>
                             <th style="text-align: left; padding-left: 0px">%C2H4</th>
                             <th style="text-align: left; padding-left: 0px">%C2H2</th>
-                            <th style="text-align: left; padding-left: 0px">fault</th>
-                            <th style="text-align: left; padding-left: 0px">kelas</th>
+                            <th style="text-align: center; padding-left: 0px">fault</th>
+                            <th style="text-align: center; padding-left: 0px">kelas</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for data in data.n_data_normalisasi %}
                         <tr>
-                            <td style="text-align: center; padding-left: 0px; padding-right: 30px">{{ forloop.counter }}</td>
+                            <td style="text-align: center; padding-left: 15px; padding-right: 30px">{{ forloop.counter }}</td>
                             <td style="text-align: left; padding-left: 0px">{{ data.persen_ch4 }}</td>
                             <td style="text-align: left; padding-left: 0px">{{ data.persen_c2h4 }}</td>
                             <td style="text-align: left; padding-left: 0px">{{ data.persen_c2h2 }}</td>
-                            <td style="text-align: left; padding-left: 0px">{{ data.fault }}</td>
-                            <td style="text-align: left; padding-left: 0px">{{ data.kelas }}</td>
+                            <td style="text-align: center; padding-left: 0px">{{ data.fault }}</td>
+                            <td style="text-align: center; padding-left: 0px">{{ data.kelas }}</td>
                         </tr>
                         <tr class="spacer"></tr>
                     {% endfor %}

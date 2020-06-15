@@ -21,9 +21,13 @@ def proses_testing():
         7: 'PD'
     }
 
+    list_data_kernel = []
+
     for i, x in enumerate(data_testing):
 
         hasil = ''
+
+        data_kernel = []
 
         for lvl in range(7):
 
@@ -37,6 +41,7 @@ def proses_testing():
             if len(db) > 0:
                 bias = float(db[0].bias)
 
+            data_k = []
             data_alpha = []
 
             for j, y in enumerate(data_training):
@@ -48,7 +53,11 @@ def proses_testing():
 
                 a = float(y['alpha']) * float(y['kelas']) * k
 
+                data_k.append([k, a])
+
                 data_alpha.append(a)
+
+            data_kernel.append(data_k)
 
             sum_data_alpha = sum(data_alpha)
 
@@ -114,11 +123,20 @@ def proses_testing():
                 dd.akurasi = 0
                 dd.save()
 
+        list_data_kernel.append(
+            {
+                'no': x['no'],
+                'data_kernel': data_kernel
+            }
+        )
+
         db = DataTesting.objects.filter(no=str(x['no']))
         if len(db) > 0:
             dt = db[0]
             dt.hasil = hasil
             dt.save()
+
+    return list_data_kernel
 
 
 def get_data_testing():

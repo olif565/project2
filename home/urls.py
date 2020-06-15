@@ -39,5 +39,7 @@ urlpatterns = [
     path('normalisasi/<int:level>/', view_normalisasi.IndexView.as_view(), name='normalisasi'),
     path('training/<int:level>/', view_training.IndexView.as_view(), name='training'),
 
-    path('diagnosis', view_diagnosis.IndexView.as_view(), name='diagnosis')
+    path('diagnosis', view_diagnosis.IndexView.as_view(), name='diagnosis'),
+    path('diagnosis_normalisasi', view_diagnosis.NormalisasiView.as_view(), name='diagnosis_normalisasi'),
+    path('diagnosis_kernel', view_diagnosis.KernelView.as_view(), name='diagnosis_kernel')
 ]
