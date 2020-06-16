@@ -26,12 +26,14 @@ class NormalisasiView(ListView):
     context_object_name = 'data'
 
     def get_queryset(self):
-        data_normalisasi = []
+        # data_normalisasi = []
+        #
+        # for x in range(7):
+        #     lv = x + 1
+        #     data_n = testing.get_data_training(lv)
+        #     data_normalisasi.append(data_n)
 
-        for x in range(7):
-            lv = x + 1
-            data_n = testing.get_data_training(lv)
-            data_normalisasi.append(data_n)
+        data_normalisasi = testing.get_data_testing()
 
         context = {
             'data_normalisasi': data_normalisasi
