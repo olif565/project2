@@ -8,12 +8,19 @@
             <div class="table-data__tool-left">
                 <a href="{% url 'home:normalisasi' data.level %}">
                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                        NORMALISASI DAN KERNEL 
+                        NORMALISASI 
                     </button>
                 </a>
+                &nbsp;
+                <a href="{% url 'home:kernel' data.level %}">
+                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                        KERNEL 
+                    </button>
+                </a>
+                &nbsp;
                 <a href="{% url 'home:training' data.level %}">
                     <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                        MATRIKS HESSIAN
+                        SEQUENTIAL TRAINING
                     </button>
                 </a>
             </div>

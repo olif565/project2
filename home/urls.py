@@ -15,7 +15,7 @@ Including another URLconf
 
 from django.urls import path
 
-from home.views import view_data_training, view_data_testing, view_normalisasi, view_training, view_diagnosis
+from home.views import view_data_training, view_data_testing, view_normalisasi, view_training, view_diagnosis, view_kernel
 
 app_name = 'home'
 
@@ -37,6 +37,7 @@ urlpatterns = [
     path('delete-testing/<int:pk>/', view_data_testing.delete, name='delete-testing'),
 
     path('normalisasi/<int:level>/', view_normalisasi.IndexView.as_view(), name='normalisasi'),
+    path('kernel/<int:level>/', view_kernel.IndexView.as_view(), name='kernel'),
     path('training/<int:level>/', view_training.IndexView.as_view(), name='training'),
 
     path('diagnosis', view_diagnosis.IndexView.as_view(), name='diagnosis'),
