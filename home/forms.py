@@ -27,7 +27,7 @@ class TrainingForm(forms.Form):
     lamda = forms.CharField(label='Lambda', required=True, max_length=100,
                              widget=TextInput(attrs={'type': 'number'}),
                              error_messages={'required': "Lambda"})
-    constant = forms.CharField(label='Constant', required=True, max_length=100,
+    constant = forms.CharField(label='Complexity', required=True, max_length=100,
                                 widget=TextInput(attrs={'type': 'number'}),
                                 error_messages={'required': "Constant"})
     gamma = forms.CharField(label='Gamma', required=True, max_length=100,
