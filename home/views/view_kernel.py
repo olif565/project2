@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 
 from home.forms import NormalisasiForm
-from home.models import Training
+from home.models import Parameter
 from home.views import kernel
 from home.views import normalisasi
 
@@ -18,14 +18,14 @@ class IndexView(ListView):
     def get_queryset(self, **kwargs):
 
         try:
-            data = Training.objects.get(id='1')
+            data = Parameter.objects.get(id='1')
             if data is None:
                 form = NormalisasiForm()
                 sigma = None
             else:
                 form = NormalisasiForm(initial={'sigma': data.sigma})
                 sigma = data.sigma
-        except Training.DoesNotExist:
+        except Parameter.DoesNotExist:
             form = NormalisasiForm()
             sigma = None
 
@@ -71,9 +71,9 @@ class IndexView(ListView):
             sigma = form.cleaned_data['sigma']
 
             try:
-                param = Training.objects.get(id='1')
-            except Training.DoesNotExist:
-                param = Training()
+                param = Parameter.objects.get(id='1')
+            except Parameter.DoesNotExist:
+                param = Parameter()
                 param.id = '1'
 
             param.sigma = sigma

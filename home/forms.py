@@ -8,7 +8,7 @@ from .models import DataTesting
 class DataForm(forms.ModelForm):
     class Meta:
         model = Data
-        fields = "__all__"
+        fields = ['no', 'persen_ch4', 'persen_c2h4', 'persen_c2h2', 'fault']
 
 
 class DataTestingForm(forms.ModelForm):
@@ -23,11 +23,11 @@ class NormalisasiForm(forms.Form):
                             error_messages={'required': "Sigma"})
 
 
-class TrainingForm(forms.Form):
+class ParameterForm(forms.Form):
     lamda = forms.CharField(label='Lambda', required=True, max_length=100,
                              widget=TextInput(attrs={'type': 'number'}),
                              error_messages={'required': "Lambda"})
-    constant = forms.CharField(label='Complexity', required=True, max_length=100,
+    complexity = forms.CharField(label='Complexity', required=True, max_length=100,
                                 widget=TextInput(attrs={'type': 'number'}),
                                 error_messages={'required': "Constant"})
     gamma = forms.CharField(label='Gamma', required=True, max_length=100,

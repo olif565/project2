@@ -3,9 +3,9 @@ from django.db import models
 
 class Data(models.Model):
     no = models.CharField("No", max_length=50, blank=True, null=True)
-    # ppm_ch4 = models.CharField("ppm CH4", max_length=50, blank=True, null=True)
-    # ppm_c2h4 = models.CharField("ppm C2H4", max_length=50, blank=True, null=True)
-    # ppm_c2h2 = models.CharField("ppm C2H2", max_length=50, blank=True, null=True)
+    ppm_ch4 = models.CharField("ppm CH4", max_length=50, blank=True, null=True)
+    ppm_c2h4 = models.CharField("ppm C2H4", max_length=50, blank=True, null=True)
+    ppm_c2h2 = models.CharField("ppm C2H2", max_length=50, blank=True, null=True)
     persen_ch4 = models.CharField("%CH4", max_length=50, blank=True, null=True)
     persen_c2h4 = models.CharField("%C2H4", max_length=50, blank=True, null=True)
     persen_c2h2 = models.CharField("%C2H2", max_length=50, blank=True, null=True)
@@ -42,6 +42,9 @@ class DataBias(models.Model):
 
 class DataTesting(models.Model):
     no = models.CharField("No", max_length=50, blank=False, null=True)
+    ppm_ch4 = models.CharField("ppm CH4", max_length=50, blank=True, null=True)
+    ppm_c2h4 = models.CharField("ppm C2H4", max_length=50, blank=True, null=True)
+    ppm_c2h2 = models.CharField("ppm C2H2", max_length=50, blank=True, null=True)
     persen_ch4 = models.CharField("%CH4", max_length=50, blank=False, null=True)
     persen_c2h4 = models.CharField("%C2H4", max_length=50, blank=False, null=True)
     persen_c2h2 = models.CharField("%C2H2", max_length=50, blank=False, null=True)
@@ -53,11 +56,11 @@ class DataTesting(models.Model):
         return self.no
 
 
-class Training(models.Model):
+class Parameter(models.Model):
     id = models.IntegerField('id', primary_key=True)
     lamda = models.CharField('Lambda', max_length=100, blank=True, null=True)
     sigma = models.CharField('Sigma', max_length=100, blank=True, null=True)
-    constant = models.CharField('Constant', max_length=100, blank=True, null=True)
+    complexity = models.CharField('Complexity', max_length=100, blank=True, null=True)
     gamma = models.CharField('Gamma', max_length=100, blank=True, null=True)
     iterasi = models.CharField('Iterasi', max_length=100, blank=True, null=True)
 

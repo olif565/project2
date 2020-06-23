@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 
-from home.forms import TrainingForm
-from home.models import Training
+from home.forms import ParameterForm
+from home.models import Parameter
 from home.views import training, normalisasi
 import logging
 
@@ -16,33 +16,33 @@ class IndexView(ListView):
     def get_queryset(self, **kwargs):
 
         try:
-            data = Training.objects.get(id='1')
+            data = Parameter.objects.get(id='1')
             if data is None:
-                form = TrainingForm()
+                form = ParameterForm()
                 lamda = None
-                constant = None
+                complexity = None
                 gamma = None
                 iterasi = None
                 s = '2'
             else:
                 lamda = float(data.lamda)
-                constant = float(data.constant)
+                complexity = float(data.complexity)
                 gamma = float(data.gamma)
                 iterasi = int(data.iterasi)
                 s = data.sigma
                 if s is None or not s.strip():
                     s = '2'
 
-                form = TrainingForm(initial={
+                form = ParameterForm(initial={
                     'lamda': data.lamda,
-                    'constant': data.constant,
+                    'complexity': data.complexity,
                     'gamma': data.gamma,
                     'iterasi': data.iterasi
                 })
-        except Training.DoesNotExist:
-            form = TrainingForm()
+        except Parameter.DoesNotExist:
+            form = ParameterForm()
             lamda = None
-            constant = None
+            complexity = None
             gamma = None
             iterasi = None
             s = '2'
@@ -61,7 +61,7 @@ class IndexView(ListView):
         else:
             display_form = 'none'
 
-            if lamda is not None and constant is not None and gamma is not None and iterasi is not None:
+            if lamda is not None and complexity is not None and gamma is not None and iterasi is not None:
                 display_result = 'block'
 
                 data_normalisasi = normalisasi.get_normalisasi(level)['n_data_normalisasi']
@@ -72,7 +72,7 @@ class IndexView(ListView):
                 n_list_data_matriks = matriks['n_list_data_matriks']
                 n_list_data_matriks_view = matriks['n_list_data_matriks_view']
 
-                data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+                data_iterasi = training.get_iterasi(n_list_data_matriks, complexity, gamma, iterasi)
 
                 if len(data_iterasi) > 0:
                     dt = training.get_bias(level, n_data_normalisasi,
@@ -98,29 +98,29 @@ class IndexView(ListView):
 
     # Handle POST HTTP requests
     def post(self, request, *args, **kwargs):
-        form = TrainingForm(request.POST)
+        form = ParameterForm(request.POST)
 
         level = self.kwargs['level']
 
         if form.is_valid():
             lamda = float(form.cleaned_data['lamda'])
-            constant = float(form.cleaned_data['constant'])
+            complexity = float(form.cleaned_data['complexity'])
             gamma = float(form.cleaned_data['gamma'])
             iterasi = int(form.cleaned_data['iterasi'])
 
             try:
-                param = Training.objects.get(id='1')
+                param = Parameter.objects.get(id='1')
                 s = param.sigma
                 if s is None or not s.strip():
                     s = '2'
-            except Training.DoesNotExist:
-                param = Training()
+            except Parameter.DoesNotExist:
+                param = Parameter()
                 param.id = '1'
                 s = '2'
 
             param.sigma = s
             param.lamda = lamda
-            param.constant = constant
+            param.complexity = complexity
             param.gamma = gamma
             param.iterasi = iterasi
             param.save()
@@ -144,7 +144,7 @@ class IndexView(ListView):
                 n_list_data_matriks = matriks['n_list_data_matriks']
                 n_list_data_matriks_view = matriks['n_list_data_matriks_view']
 
-                data_iterasi = training.get_iterasi(n_list_data_matriks, constant, gamma, iterasi)
+                data_iterasi = training.get_iterasi(n_list_data_matriks, complexity, gamma, iterasi)
 
                 data_bobot = []
                 bias = 0

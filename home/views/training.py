@@ -54,7 +54,7 @@ def get_matriks(data_normalisasi, lamda, sigma):
     return data_kernel
 
 
-def get_iterasi(list_data_matriks, constanta, gamma, i):
+def get_iterasi(list_data_matriks, complexity, gamma, i):
 
     data_iterasi = []
 
@@ -71,7 +71,7 @@ def get_iterasi(list_data_matriks, constanta, gamma, i):
             a = alfa_baru
 
         data_error_rate = get_error_rate(a, list_data_matriks)
-        data_delta_alfa = get_delta_alfa(a, data_error_rate, constanta, gamma)
+        data_delta_alfa = get_delta_alfa(a, data_error_rate, complexity, gamma)
         data_alfa_baru = get_alfa_baru(a, data_delta_alfa)
 
         alfa_baru = data_alfa_baru
@@ -111,10 +111,10 @@ def get_error_rate(alpha, list_data_matriks):
     return data_error_rate
 
 
-def get_delta_alfa(alpha, data_error_rate, constanta, gamma):
+def get_delta_alfa(alpha, data_error_rate, complexity, gamma):
 
-    # constant
-    const = constanta
+    # complexity
+    comp = complexity
 
     # gamma
     g = gamma
@@ -129,7 +129,7 @@ def get_delta_alfa(alpha, data_error_rate, constanta, gamma):
         else:
             a = alpha[i]
 
-        da = min(max(g * (1 - x), -a), (const - a))
+        da = min(max(g * (1 - x), -a), (comp - a))
         data_delta_alfa.append(da)
 
     return data_delta_alfa

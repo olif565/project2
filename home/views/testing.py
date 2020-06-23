@@ -1,7 +1,7 @@
 import math
 import numpy as np
 
-from home.models import DataTesting, HasilTraining, Training, DataBias, Diagnosis
+from home.models import DataTesting, HasilTraining, Parameter, DataBias, Diagnosis
 
 
 def proses_testing():
@@ -212,7 +212,7 @@ def get_data_training(level):
 
 
 def get_sigma():
-    db = Training.objects.all()
+    db = Parameter.objects.all()
 
     sigma = 2
     if len(db) > 0:
