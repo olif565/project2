@@ -53,7 +53,32 @@ def create(request):
         else:
             form = DataForm(request.POST)
             if form.is_valid():
-                form.save()
+                no = form.cleaned_data['no']
+                ppm_ch4 = float(form.cleaned_data['ppm_ch4'])
+                ppm_c2h4 = float(form.cleaned_data['ppm_c2h4'])
+                ppm_c2h2 = float(form.cleaned_data['ppm_c2h2'])
+                fault = form.cleaned_data['fault']
+
+                sum = ppm_ch4 + ppm_c2h4 + ppm_c2h2
+                ch4 = (ppm_ch4 / sum) * 100
+                c2h4 = (ppm_c2h4 / sum) * 100
+                c2h2 = (ppm_c2h2 / sum) * 100
+
+                try:
+                    param = Data.objects.get(no=no)
+                except Data.DoesNotExist:
+                    param = Data()
+                    param.no = no
+
+                param.ppm_ch4 = ppm_ch4
+                param.ppm_c2h4 = ppm_c2h4
+                param.ppm_c2h2 = ppm_c2h2
+                param.persen_ch4 = ch4
+                param.persen_c2h4 = c2h4
+                param.persen_c2h2 = c2h2
+                param.fault = fault
+                param.save()
+
                 return redirect('home:data-training')
 
     return render(request, 'home_data_training_create.html', {'form': form})
@@ -63,8 +88,35 @@ def edit(request, pk, template_name='edit.html'):
     data = get_object_or_404(Data, pk=pk)
     form = DataForm(request.POST or None, instance=data)
     if form.is_valid():
-        form.save()
+
+        no = form.cleaned_data['no']
+        ppm_ch4 = float(form.cleaned_data['ppm_ch4'])
+        ppm_c2h4 = float(form.cleaned_data['ppm_c2h4'])
+        ppm_c2h2 = float(form.cleaned_data['ppm_c2h2'])
+        fault = form.cleaned_data['fault']
+
+        sum = ppm_ch4 + ppm_c2h4 + ppm_c2h2
+        ch4 = (ppm_ch4 / sum) * 100
+        c2h4 = (ppm_c2h4 / sum) * 100
+        c2h2 = (ppm_c2h2 / sum) * 100
+
+        try:
+            param = Data.objects.get(no=no)
+        except Data.DoesNotExist:
+            param = Data()
+            param.no = no
+
+        param.ppm_ch4 = ppm_ch4
+        param.ppm_c2h4 = ppm_c2h4
+        param.ppm_c2h2 = ppm_c2h2
+        param.persen_ch4 = ch4
+        param.persen_c2h4 = c2h4
+        param.persen_c2h2 = c2h2
+        param.fault = fault
+        param.save()
+
         return redirect('home:data-training')
+
     return render(request, template_name, {'form': form})
 
 
@@ -95,19 +147,30 @@ def save_excel_to_db(data_excel):
                         no = data[0]
                         db = Data.objects.filter(no=str(no))
 
+                        sum = float(data[1])+float(data[2])+float(data[3])
+                        ch4 = (data[1] / sum) * 100
+                        c2h4 = (data[2] / sum) * 100
+                        c2h2 = (data[3] / sum) * 100
+
                         if len(db) == 0:
                             Data.objects.create(
                                 no=data[0],
-                                persen_ch4=data[1],
-                                persen_c2h4=data[2],
-                                persen_c2h2=data[3],
+                                ppm_ch4=data[1],
+                                ppm_c2h4=data[2],
+                                ppm_c2h2=data[3],
+                                persen_ch4=ch4,
+                                persen_c2h4=c2h4,
+                                persen_c2h2=c2h2,
                                 fault=data[4]
                             )
                         else:
                             dt = db[0]
                             dt.no = data[0]
-                            dt.persen_ch4 = data[1]
-                            dt.persen_c2h4 = data[2]
-                            dt.persen_c2h2 = data[3]
+                            dt.ppm_ch4 = data[1]
+                            dt.ppm_c2h4 = data[2]
+                            dt.ppm_c2h2 = data[3]
+                            dt.persen_ch4 = ch4
+                            dt.persen_c2h4 = c2h4
+                            dt.persen_c2h2 = c2h2
                             dt.fault = data[4]
                             dt.save()

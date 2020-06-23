@@ -8,13 +8,13 @@ from .models import DataTesting
 class DataForm(forms.ModelForm):
     class Meta:
         model = Data
-        fields = ['no', 'persen_ch4', 'persen_c2h4', 'persen_c2h2', 'fault']
+        fields = ['no', 'ppm_ch4', 'ppm_c2h4', 'ppm_c2h2', 'fault']
 
 
 class DataTestingForm(forms.ModelForm):
     class Meta:
         model = DataTesting
-        fields = ['no', 'persen_ch4', 'persen_c2h4', 'persen_c2h2', 'fault']
+        fields = ['no', 'ppm_ch4', 'ppm_c2h4', 'ppm_c2h2', 'fault']
 
 
 class NormalisasiForm(forms.Form):

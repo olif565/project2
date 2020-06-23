@@ -58,7 +58,32 @@ def create(request):
         else:
             form = DataTestingForm(request.POST)
             if form.is_valid():
-                form.save()
+
+                no = form.cleaned_data['no']
+                ppm_ch4 = float(form.cleaned_data['ppm_ch4'])
+                ppm_c2h4 = float(form.cleaned_data['ppm_c2h4'])
+                ppm_c2h2 = float(form.cleaned_data['ppm_c2h2'])
+                fault = form.cleaned_data['fault']
+
+                sum = ppm_ch4 + ppm_c2h4 + ppm_c2h2
+                ch4 = (ppm_ch4 / sum) * 100
+                c2h4 = (ppm_c2h4 / sum) * 100
+                c2h2 = (ppm_c2h2 / sum) * 100
+
+                try:
+                    param = DataTesting.objects.get(no=no)
+                except DataTesting.DoesNotExist:
+                    param = DataTesting()
+                    param.no = no
+
+                param.ppm_ch4 = ppm_ch4
+                param.ppm_c2h4 = ppm_c2h4
+                param.ppm_c2h2 = ppm_c2h2
+                param.persen_ch4 = ch4
+                param.persen_c2h4 = c2h4
+                param.persen_c2h2 = c2h2
+                param.fault = fault
+                param.save()
 
                 # Testing
                 testing.proses_testing()
@@ -72,7 +97,32 @@ def edit(request, pk, template_name='edit.html'):
     data = get_object_or_404(DataTesting, pk=pk)
     form = DataTestingForm(request.POST or None, instance=data)
     if form.is_valid():
-        form.save()
+
+        no = form.cleaned_data['no']
+        ppm_ch4 = float(form.cleaned_data['ppm_ch4'])
+        ppm_c2h4 = float(form.cleaned_data['ppm_c2h4'])
+        ppm_c2h2 = float(form.cleaned_data['ppm_c2h2'])
+        fault = form.cleaned_data['fault']
+
+        sum = ppm_ch4 + ppm_c2h4 + ppm_c2h2
+        ch4 = (ppm_ch4 / sum) * 100
+        c2h4 = (ppm_c2h4 / sum) * 100
+        c2h2 = (ppm_c2h2 / sum) * 100
+
+        try:
+            param = DataTesting.objects.get(no=no)
+        except DataTesting.DoesNotExist:
+            param = DataTesting()
+            param.no = no
+
+        param.ppm_ch4 = ppm_ch4
+        param.ppm_c2h4 = ppm_c2h4
+        param.ppm_c2h2 = ppm_c2h2
+        param.persen_ch4 = ch4
+        param.persen_c2h4 = c2h4
+        param.persen_c2h2 = c2h2
+        param.fault = fault
+        param.save()
 
         # Testing
         testing.proses_testing()

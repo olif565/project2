@@ -173,19 +173,25 @@ def get_data_testing():
         n_data_normalisasi.append(data)
 
     for i, x in enumerate(list_persen_ch4):
-        n = (float(x) - minvalue['persen_ch4']) / (maxvalue['persen_ch4'] - minvalue['persen_ch4'])
-        n_persen_ch4.append(n)
-        n_data_normalisasi[i]['persen_ch4'] = float(n)
+        minmax = maxvalue['persen_ch4'] - minvalue['persen_ch4']
+        if minmax > 0:
+            n = (float(x) - minvalue['persen_ch4']) / minmax
+            n_persen_ch4.append(n)
+            n_data_normalisasi[i]['persen_ch4'] = float(n)
 
     for i, x in enumerate(list_persen_c2h4):
-        n = (float(x) - minvalue['persen_c2h4']) / (maxvalue['persen_c2h4'] - minvalue['persen_c2h4'])
-        n_persen_c2h4.append(n)
-        n_data_normalisasi[i]['persen_c2h4'] = float(n)
+        minmax = maxvalue['persen_c2h4'] - minvalue['persen_c2h4']
+        if minmax > 0:
+            n = (float(x) - minvalue['persen_c2h4']) / minmax
+            n_persen_c2h4.append(n)
+            n_data_normalisasi[i]['persen_c2h4'] = float(n)
 
     for i, x in enumerate(list_persen_c2h2):
-        n = (float(x) - minvalue['persen_c2h2']) / (maxvalue['persen_c2h2'] - minvalue['persen_c2h2'])
-        n_persen_c2h2.append(n)
-        n_data_normalisasi[i]['persen_c2h2'] = float(n)
+        minmax = maxvalue['persen_c2h2'] - minvalue['persen_c2h2']
+        if minmax > 0:
+            n = (float(x) - minvalue['persen_c2h2']) / minmax
+            n_persen_c2h2.append(n)
+            n_data_normalisasi[i]['persen_c2h2'] = float(n)
 
     return n_data_normalisasi
 
