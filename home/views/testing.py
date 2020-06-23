@@ -146,16 +146,37 @@ def get_data_testing():
     list_persen_c2h4 = DataTesting.objects.values_list('persen_c2h4', flat=True)
     list_persen_c2h2 = DataTesting.objects.values_list('persen_c2h2', flat=True)
 
+    if len(list_persen_ch4) > 0:
+        min_persen_ch4 = min([float(i) for i in list_persen_ch4])
+        max_persen_ch4 = max([float(i) for i in list_persen_ch4])
+    else:
+        min_persen_ch4 = 0
+        max_persen_ch4 = 0
+
+    if len(list_persen_c2h4) > 0:
+        min_persen_c2h4 = min([float(i) for i in list_persen_c2h4])
+        max_persen_c2h4 = max([float(i) for i in list_persen_c2h4])
+    else:
+        min_persen_c2h4 = 0
+        max_persen_c2h4 = 0
+
+    if len(list_persen_c2h2) > 0:
+        min_persen_c2h2 = min([float(i) for i in list_persen_c2h2])
+        max_persen_c2h2 = max([float(i) for i in list_persen_c2h2])
+    else:
+        min_persen_c2h2 = 0
+        max_persen_c2h2 = 0
+
     minvalue = {
-        'persen_ch4': min([float(i) for i in list_persen_ch4]),
-        'persen_c2h4': min([float(i) for i in list_persen_c2h4]),
-        'persen_c2h2': min([float(i) for i in list_persen_c2h2])
+        'persen_ch4': min_persen_ch4,
+        'persen_c2h4': min_persen_c2h4,
+        'persen_c2h2': min_persen_c2h2
     }
 
     maxvalue = {
-        'persen_ch4': max([float(i) for i in list_persen_ch4]),
-        'persen_c2h4': max([float(i) for i in list_persen_c2h4]),
-        'persen_c2h2': max([float(i) for i in list_persen_c2h2])
+        'persen_ch4': max_persen_ch4,
+        'persen_c2h4': max_persen_c2h4,
+        'persen_c2h2': max_persen_c2h2
     }
 
     n_data_normalisasi = []
