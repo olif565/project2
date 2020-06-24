@@ -25,6 +25,9 @@
                     <thead>
                         <tr>
                             <td>no</td>
+                            <td>% CH4</td>
+                            <td>% C2H4</td>
+                            <td>% C2H4</td>
                             <td>fault</td>
                             <td>hasil diagnosis</td>
                             <td></td>
@@ -34,6 +37,9 @@
                     {% for data in data_list %}
                     <tr class="tr-shadow">
                         <td><a href="{% url 'home:detail-testing' data.pk %}"> {{ data.no }}</a></td>
+                        <td>{{ data.persen_ch4 }}</td>
+                        <td>{{ data.persen_c2h4 }}</td>
+                        <td>{{ data.persen_c2h2 }}</td>
                         <td>{{ data.fault }}</td>
                         <td>{{ data.hasil }}</td>
                         <td>
