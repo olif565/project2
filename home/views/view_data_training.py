@@ -9,7 +9,10 @@ from home.forms import DataForm
 
 
 def dashboard(request):
-    return render(request, 'home.html', {})
+    if 'username' in request.session:
+        return render(request, 'home.html', {})
+    else:
+        return redirect('/login/')
 
 
 class IndexView(ListView):

@@ -9,9 +9,11 @@ class Profile(models.Model):
     username = models.CharField(max_length=100, blank=True)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
+    email = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user
 
 
 @receiver(post_save, sender=User)

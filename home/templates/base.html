@@ -108,6 +108,13 @@
                             <i class="fas fa-table"></i>Data Training
                         </a>
                     </li>
+                    {% if request.session.status == '1' %}
+                    <li>
+                        <a href="{% url 'home:data-user' %}">
+                            <i class="fas fa-table"></i>Data User
+                        </a>
+                    </li>
+                    {% endif %}
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Proses Training</a>
@@ -171,7 +178,7 @@
                                         <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="Admin" />
                                     </div>
                                     <div class="content">
-                                        <a class="js-acc-btn" href="#">admin</a>
+                                        <a class="js-acc-btn" href="#">{{ request.session.first_name }}</a>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
                                         <div class="info clearfix">
@@ -182,9 +189,9 @@
                                             </div>
                                             <div class="content">
                                                 <h5 class="name">
-                                                    <a href="#">admin</a>
+                                                    <a href="#">{{ request.session.username }}</a>
                                                 </h5>
-                                                <span class="email">admin@example.com</span>
+                                                <span class="email">{{ request.session.email }}</span>
                                             </div>
                                         </div>
                                         <div class="account-dropdown__body">
