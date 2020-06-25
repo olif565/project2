@@ -53,6 +53,11 @@
                             <td>Fungsi Klasifikasi 𝒇7(𝒙)</td>
                             <td>Hasil Klasifikasi</td>
                             <td>Kelas Aktual</td>
+
+                            {% if request.session.status == '2' %}
+                            <td>Keterangan</td>
+                            {% endif %}
+
                             <td></td>
                         </tr>
                     </thead>
@@ -76,6 +81,9 @@
                         <td>{{ dt.fk7 }}</td>
                         <td>{{ dt.hasil }}</td>
                         <td>{{ dt.aktual }}</td>
+                        {% if request.session.status == '2' %}
+                        <td>{{ dt.keterangan }}</td>
+                        {% endif %}
                     </tr>
                     <tr class="spacer"></tr>
                     {% endfor %}

@@ -84,3 +84,11 @@ class Diagnosis(models.Model):
 
     def __str__(self):
         return self.no
+
+
+class FaultDesc(models.Model):
+    code = models.CharField("Kode", max_length=50, blank=False, null=True)
+    desc = models.CharField("Keterangan", max_length=300, blank=False, null=True)
+
+    def __str__(self):
+        return self.code

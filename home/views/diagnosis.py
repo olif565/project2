@@ -1,9 +1,19 @@
 import numpy as np
 
-from home.models import Diagnosis
+from home.models import Diagnosis, FaultDesc
 
 
 def get_diagnosis():
+
+    desc = {
+        'D1': FaultDesc.objects.filter(code='D1')[0].desc,
+        'D2': FaultDesc.objects.filter(code='D2')[0].desc,
+        'DT': FaultDesc.objects.filter(code='DT')[0].desc,
+        'T3': FaultDesc.objects.filter(code='T3')[0].desc,
+        'T2': FaultDesc.objects.filter(code='T2')[0].desc,
+        'T1': FaultDesc.objects.filter(code='T1')[0].desc,
+        'PD': FaultDesc.objects.filter(code='PD')[0].desc
+    }
 
     data = []
 
@@ -77,7 +87,8 @@ def get_diagnosis():
             'f7': f7,
             'fk7': fk7,
             'hasil': x.hasil,
-            'aktual': x.aktual
+            'aktual': x.aktual,
+            'keterangan': desc.get(x.aktual)
         }
         data.append(d)
 
