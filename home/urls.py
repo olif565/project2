@@ -48,5 +48,7 @@ urlpatterns = [
 
     path('diagnosis', view_diagnosis.IndexView.as_view(), name='diagnosis'),
     path('diagnosis_normalisasi', view_diagnosis.NormalisasiView.as_view(), name='diagnosis_normalisasi'),
-    path('diagnosis_kernel', view_diagnosis.KernelView.as_view(), name='diagnosis_kernel')
+    path('diagnosis_kernel', view_diagnosis.KernelView.as_view(), name='diagnosis_kernel'),
+
+    path('logout', view_data_training.logout_view, name='logout')
 ]

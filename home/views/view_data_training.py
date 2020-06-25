@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import ListView, DetailView
@@ -12,7 +13,7 @@ def dashboard(request):
     if 'username' in request.session:
         return render(request, 'home.html', {})
     else:
-        return redirect('/login/')
+        return redirect('/account/login/')
 
 
 class IndexView(ListView):
@@ -129,6 +130,11 @@ def delete(request, pk, template_name='confirm_delete.html'):
         contact.delete()
         return redirect('home:data-training')
     return render(request, template_name, {'object': contact})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/account/login/')
 
 
 def save_excel_to_db(data_excel):
