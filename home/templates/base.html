@@ -99,22 +99,21 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li>
-                      <a class="js-arrow" href="{% url 'home:index' %}">
-                          <i class="fas fa-tachometer-alt"></i>Dashboard
-                      </a>
+                        <a class="js-arrow" href="{% url 'home:index' %}">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard
+                        </a>
                     </li>
+                    {% if request.session.status == '1' %}
                     <li>
                         <a href="{% url 'home:data-training' %}">
                             <i class="fas fa-table"></i>Data Training
                         </a>
                     </li>
-                    {% if request.session.status == '1' %}
                     <li>
                         <a href="{% url 'home:data-user' %}">
                             <i class="fas fa-table"></i>Data User
                         </a>
                     </li>
-                    {% endif %}
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Proses Training</a>
@@ -142,6 +141,7 @@
                             </li>
                         </ul>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="{% url 'home:data-testing' %}">
                             <i class="far fa-check-square"></i>Data Testing

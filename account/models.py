@@ -13,7 +13,7 @@ class Profile(models.Model):
     status = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.username
 
 
 @receiver(post_save, sender=User)

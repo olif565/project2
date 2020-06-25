@@ -49,6 +49,7 @@ def signup_view(request):
                 user.profile.username = form.cleaned_data.get('username')
                 user.profile.first_name = form.cleaned_data.get('first_name')
                 user.profile.last_name = form.cleaned_data.get('last_name')
+                user.profile.email = form.cleaned_data.get('email')
                 user.profile.status = '2'
                 user.save()
 

@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 
@@ -44,10 +45,41 @@ class DataDetailView(DetailView):
     template_name = 'home_data_user_detail.html'
 
 
+def detail(request, pk, template_name='home_data_user_detail.html'):
+    db = get_object_or_404(Profile, pk=pk)
+
+    if db is not None:
+        status = {
+            '1': 'Admin',
+            '2': 'Staff'
+        }
+        profile = {
+            'username': db.username,
+            'first_name': db.first_name,
+            'last_name': db.last_name,
+            'email': db.email,
+            'status': status.get(db.status)
+        }
+    else:
+        profile = {
+            'username': '-',
+            'first_name': '-',
+            'last_name': '-',
+            'email': '-',
+            'status': '-'
+        }
+
+    context = {
+        'profile': profile
+    }
+
+    return render(request, template_name, context)
+
+
 def create(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        print(form.errors)
+
         if form.is_valid():
             if form.cleaned_data.get('password1') == form.cleaned_data.get('password2'):
                 user = form.save()
@@ -71,10 +103,25 @@ def create(request):
 
 
 def edit(request, pk, template_name='home_data_user_edit.html'):
-    data = get_object_or_404(Profile, pk=pk)
+    data = get_object_or_404(User, pk=pk)
     form = SignUpForm(request.POST or None, instance=data)
+
     if form.is_valid():
-        form.save()
+        if form.cleaned_data.get('password1') == form.cleaned_data.get('password2'):
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.username = form.cleaned_data.get('username')
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
+
+            if form.cleaned_data.get('is_staff'):
+                user.profile.status = '1'
+            else:
+                user.profile.status = '2'
+
+            user.save()
+
         return redirect('home:data-user')
 
     return render(request, template_name, {'form': form})

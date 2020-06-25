@@ -26,7 +26,7 @@ urlpatterns = [
     path('data-training', view_data_training.IndexView.as_view(), name='data-training'),
     path('data-testing', view_data_testing.IndexView.as_view(), name='data-testing'),
 
-    path('detail-user/<int:pk>/', view_data_user.DataDetailView.as_view(), name='detail-user'),
+    path('detail-user/<int:pk>/', view_data_user.detail, name='detail-user'),
     path('detail-training/<int:pk>/', view_data_training.DataDetailView.as_view(), name='detail-training'),
     path('detail-testing/<int:pk>/', view_data_testing.DataDetailView.as_view(), name='detail-testing'),
     
