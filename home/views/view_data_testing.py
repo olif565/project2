@@ -158,21 +158,32 @@ def save_excel_to_db(data_excel):
                         no = data[0]
                         db = DataTesting.objects.filter(no=str(no))
 
+                        sum = float(data[1])+float(data[2])+float(data[3])
+                        ch4 = (data[1] / sum) * 100
+                        c2h4 = (data[2] / sum) * 100
+                        c2h2 = (data[3] / sum) * 100
+                        
                         print(no)
 
                         if len(db) == 0:
                             DataTesting.objects.create(
                                 no=data[0],
-                                persen_ch4=data[1],
-                                persen_c2h4=data[2],
-                                persen_c2h2=data[3],
+                                ppm_ch4=data[1],
+                                ppm_c2h4=data[2],
+                                ppm_c2h2=data[3],
+                                persen_ch4=ch4,
+                                persen_c2h4=c2h4,
+                                persen_c2h2=c2h2,
                                 fault=data[4]
                             )
                         else:
                             dt = db[0]
                             dt.no = data[0]
-                            dt.persen_ch4 = data[1]
-                            dt.persen_c2h4 = data[2]
-                            dt.persen_c2h2 = data[3]
+                            dt.ppm_ch4 = data[1]
+                            dt.ppm_c2h4 = data[2]
+                            dt.ppm_c2h2 = data[3]
+                            dt.persen_ch4 = ch4
+                            dt.persen_c2h4 = c2h4
+                            dt.persen_c2h2 = c2h2
                             dt.fault = data[4]
                             dt.save()
