@@ -89,7 +89,7 @@ def create(request):
                 user.profile.last_name = form.cleaned_data.get('last_name')
                 user.profile.email = form.cleaned_data.get('email')
 
-                if form.cleaned_data.get('is_staff'):
+                if form.cleaned_data.get('is_staff') == 'True':
                     user.profile.status = '1'
                 else:
                     user.profile.status = '2'
@@ -115,7 +115,7 @@ def edit(request, pk, template_name='home_data_user_edit.html'):
             user.profile.last_name = form.cleaned_data.get('last_name')
             user.profile.email = form.cleaned_data.get('email')
 
-            if form.cleaned_data.get('is_staff'):
+            if form.cleaned_data.get('is_staff') == 'True':
                 user.profile.status = '1'
             else:
                 user.profile.status = '2'
