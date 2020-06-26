@@ -25,13 +25,27 @@ class IndexView(ListView):
                 iterasi = None
                 s = '2'
             else:
-                lamda = float(data.lamda)
-                complexity = float(data.complexity)
-                gamma = float(data.gamma)
-                iterasi = int(data.iterasi)
+                l = data.lamda
+                c = data.complexity
+                g = data.gamma
+                i = data.iterasi
                 s = data.sigma
+
+                if l is None or not s.strip():
+                    l = '1'
+                if c is None or not s.strip():
+                    c = '0.1'
+                if g is None or not s.strip():
+                    g = '1'
+                if i is None or not s.strip():
+                    i = '10'
                 if s is None or not s.strip():
                     s = '2'
+
+                lamda = float(l)
+                complexity = float(c)
+                gamma = float(g)
+                iterasi = int(i)
 
                 form = ParameterForm(initial={
                     'lamda': data.lamda,

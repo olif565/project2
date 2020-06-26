@@ -93,7 +93,7 @@ def proses_testing():
             if len(data_db) > 0:
                 aktual = data_db[0].fault
 
-            print(str(x['no']) + " ~ " + str(level) + " ~ " + str(sum_data_alpha) + " ~ " + str(f))
+            # print(str(x['no']) + " ~ " + str(level) + " ~ " + str(sum_data_alpha) + " ~ " + str(f))
 
             if fk == 1:
                 hasil = datalevel.get(level)
@@ -103,6 +103,7 @@ def proses_testing():
                 if hasil == aktual:
                     akurasi = 1
 
+                dd.hasil_code = hasil
                 dd.hasil = h
                 dd.aktual = aktual
                 dd.akurasi = akurasi

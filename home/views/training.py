@@ -174,7 +174,7 @@ def get_bias(level, data_normalisasi, data_alpha, data_kernel):
         index2 = data_alpha.index(max(alpha2))
         kernel.append(data_kernel[index2])
 
-    print(level, kernel)
+    # print(level, kernel)
 
     data_bobot = []
     sum_w = []

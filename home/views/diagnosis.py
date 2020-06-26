@@ -88,7 +88,7 @@ def get_diagnosis():
             'fk7': fk7,
             'hasil': x.hasil,
             'aktual': x.aktual,
-            'keterangan': desc.get(x.aktual)
+            'keterangan': desc.get(x.hasil_code)
         }
         data.append(d)
 

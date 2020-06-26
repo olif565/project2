@@ -90,6 +90,7 @@ def create(request):
 
                 return redirect('home:data-testing')
 
+    print(form)
     return render(request, 'home_data_testing_create.html', {'form': form})
 
 

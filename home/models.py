@@ -48,7 +48,7 @@ class DataTesting(models.Model):
     persen_ch4 = models.CharField("%CH4", max_length=50, blank=False, null=True)
     persen_c2h4 = models.CharField("%C2H4", max_length=50, blank=False, null=True)
     persen_c2h2 = models.CharField("%C2H2", max_length=50, blank=False, null=True)
-    fault = models.CharField("Fault", max_length=50, blank=False, null=True)
+    fault = models.CharField("Fault", max_length=50, blank=True, null=True)
     hasil = models.CharField("Hasil", max_length=50, blank=True, null=True)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
 
@@ -77,6 +77,7 @@ class Diagnosis(models.Model):
     f5 = models.CharField("f5", max_length=50, blank=False, null=True)
     f6 = models.CharField("f6", max_length=50, blank=False, null=True)
     f7 = models.CharField("f7", max_length=50, blank=False, null=True)
+    hasil_code = models.CharField("Hasil", max_length=50, blank=True, null=True)
     hasil = models.CharField("Hasil", max_length=50, blank=True, null=True)
     aktual = models.CharField("Aktual", max_length=50, blank=False, null=True)
     akurasi = models.CharField("Akurasi", max_length=50, blank=False, null=True)
