@@ -194,6 +194,7 @@
                                                 <span class="email">{{ request.session.email }}</span>
                                             </div>
                                         </div>
+                                        {% if request.session.status == '1' %}
                                         <div class="account-dropdown__body">
                                             <div class="account-dropdown__item">
                                                 <!-- <a href="#">
@@ -207,6 +208,7 @@
                                                     <i class="zmdi zmdi-settings"></i>Setting</a>
                                             </div> -->
                                         </div>
+                                        {% endif %}
                                         <div class="account-dropdown__footer">
                                             <a href="{% url 'home:logout'%}">
                                                 <i class="zmdi zmdi-power"></i>Logout</a>
