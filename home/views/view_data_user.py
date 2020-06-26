@@ -129,8 +129,10 @@ def edit(request, pk, template_name='home_data_user_edit.html'):
 
 def delete(request, pk, template_name='confirm_delete.html'):
     contact = get_object_or_404(Profile, pk=pk)
+    user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         contact.delete()
+        user.delete()
         return redirect('home:data-user')
     return render(request, template_name, {'object': contact})
 
