@@ -36,10 +36,12 @@
                                 <td>%C2H2</td>
                                 <td class="text-right">{{ datatesting.persen_c2h2 }}</td>
                             </tr>
+                            {% if request.session.status == '1' %}
                             <tr>
                                 <td>Fault</td>
                                 <td class="text-right">{{ datatesting.fault }}</td>
                             </tr>
+                            {% endif %}
                             <tr>
                                 <td>Hasil Diagnosis</td>
                                 <td class="text-right">{{ datatesting.hasil }}</td>

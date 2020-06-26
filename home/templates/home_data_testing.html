@@ -28,7 +28,9 @@
                             <td>% CH4</td>
                             <td>% C2H4</td>
                             <td>% C2H4</td>
+                            {% if request.session.status == '1' %}
                             <td>fault</td>
+                            {% endif %}
                             <td>hasil diagnosis</td>
                             <td></td>
                         </tr>
@@ -40,7 +42,9 @@
                         <td>{{ data.persen_ch4 }}</td>
                         <td>{{ data.persen_c2h4 }}</td>
                         <td>{{ data.persen_c2h2 }}</td>
+                        {% if request.session.status == '1' %}
                         <td>{{ data.fault }}</td>
+                         {% endif %}
                         <td>{{ data.hasil }}</td>
                         <td>
                             <div class="table-data-feature">
