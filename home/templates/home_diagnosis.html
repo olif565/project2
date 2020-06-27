@@ -89,9 +89,9 @@
                         <td>{{ dt.hasil }}</td>
                         <td>{{ dt.aktual }}</td>
                         {% endif %}
+                        {% if request.session.status == '2' %}
                         <td>{{ dt.no }}</td>
                         <td>{{ dt.hasil }}</td>
-                        {% if request.session.status == '2' %}
                         <td>{{ dt.keterangan }}</td>
                         {% endif %}
                     </tr>
