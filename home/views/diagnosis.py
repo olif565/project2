@@ -95,7 +95,9 @@ def get_diagnosis():
         if x.akurasi == '1':
             databenar = databenar + 1
 
-    akurasi = (databenar / len(db)) * 100
+    akurasi = 0
+    if len(db) > 0:
+        akurasi = (databenar / len(db)) * 100
 
     diagnosis = {
         'data': data,
