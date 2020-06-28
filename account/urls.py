@@ -20,7 +20,8 @@ from account import views
 app_name = 'account'
 
 urlpatterns = [
-    path('', views.login_view, name='login_view'),
+    path('', views.login_view, name = 'login_view'),
+    path('login/', views.login_view, name = 'login_view'),
     path('signup/', views.signup_view, name='signup_view'),
     path('', include('django.contrib.auth.urls'))
 ]
