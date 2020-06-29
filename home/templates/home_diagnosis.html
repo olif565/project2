@@ -58,7 +58,7 @@
                             <td>Kelas Aktual</td>
                             {% endif %}
 
-                            {% if request.session.status == '2' %}
+                            {% if request.session.status == '0' %}
                             <td>no</td>
                             <td>Hasil Klasifikasi</td>
                             <td>Keterangan</td>
@@ -89,7 +89,7 @@
                         <td>{{ dt.hasil }}</td>
                         <td>{{ dt.aktual }}</td>
                         {% endif %}
-                        {% if request.session.status == '2' %}
+                        {% if request.session.status == '0' %}
                         <td>{{ dt.no }}</td>
                         <td>{{ dt.hasil }}</td>
                         <td>{{ dt.keterangan }}</td>
