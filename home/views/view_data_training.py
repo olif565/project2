@@ -13,7 +13,7 @@ def dashboard(request):
     if 'username' in request.session:
         return render(request, 'home.html', {})
     else:
-        return redirect('/account/login/')
+        return redirect('/')
 
 
 class IndexView(ListView):
@@ -134,7 +134,7 @@ def delete(request, pk, template_name='confirm_delete.html'):
 
 def logout_view(request):
     logout(request)
-    return redirect('/account/login/')
+    return redirect('/')
 
 
 def save_excel_to_db(data_excel):
