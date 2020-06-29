@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('account.urls', namespace = 'account')),
-    path('account/', include('account.urls', namespace='account')),
+    # path('account/', include('account.urls', namespace='account')),
     path('home/', include('home.urls', namespace='home'))
 ]
