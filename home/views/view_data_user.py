@@ -1,10 +1,8 @@
-from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from account.forms import SignUpForm
-from account.models import Profile
 
 
 class IndexView(ListView):
@@ -13,13 +11,13 @@ class IndexView(ListView):
 
     def get_queryset(self):
 
-        db = Profile.objects.all()
+        db = User.objects.all()
 
         data_list = []
 
         status = {
-            '1': 'Admin',
-            '2': 'Staff'
+            True: 'Admin',
+            False: 'Staff'
         }
 
         for x in db:
@@ -29,7 +27,7 @@ class IndexView(ListView):
                 'first_name': x.first_name,
                 'last_name': x.last_name,
                 'email': x.email,
-                'status': status.get(x.status)
+                'status': status.get(x.is_superuser)
             }
             data_list.append(data)
 
@@ -41,24 +39,24 @@ class IndexView(ListView):
 
 
 class DataDetailView(DetailView):
-    model = Profile
+    model = User
     template_name = 'home_data_user_detail.html'
 
 
 def detail(request, pk, template_name='home_data_user_detail.html'):
-    db = get_object_or_404(Profile, pk=pk)
+    db = get_object_or_404(User, pk=pk)
 
     if db is not None:
         status = {
-            '1': 'Admin',
-            '2': 'Staff'
+            True: 'Admin',
+            False: 'Staff'
         }
         profile = {
             'username': db.username,
             'first_name': db.first_name,
             'last_name': db.last_name,
             'email': db.email,
-            'status': status.get(db.status)
+            'status': status.get(db.is_superuser)
         }
     else:
         profile = {
@@ -84,15 +82,17 @@ def create(request):
             if form.cleaned_data.get('password1') == form.cleaned_data.get('password2'):
                 user = form.save()
                 user.refresh_from_db()
-                user.profile.username = form.cleaned_data.get('username')
-                user.profile.first_name = form.cleaned_data.get('first_name')
-                user.profile.last_name = form.cleaned_data.get('last_name')
-                user.profile.email = form.cleaned_data.get('email')
+                user.username = form.cleaned_data.get('username')
+                user.first_name = form.cleaned_data.get('first_name')
+                user.last_name = form.cleaned_data.get('last_name')
+                user.email = form.cleaned_data.get('email')
 
                 if form.cleaned_data.get('is_staff') == 'True':
-                    user.profile.status = '1'
+                    user.is_superuser = True
+                    user.is_staff = False
                 else:
-                    user.profile.status = '2'
+                    user.is_superuser = False
+                    user.is_staff = True
 
                 user.save()
 
@@ -110,15 +110,17 @@ def edit(request, pk, template_name='home_data_user_edit.html'):
         if form.cleaned_data.get('password1') == form.cleaned_data.get('password2'):
             user = form.save()
             user.refresh_from_db()
-            user.profile.username = form.cleaned_data.get('username')
-            user.profile.first_name = form.cleaned_data.get('first_name')
-            user.profile.last_name = form.cleaned_data.get('last_name')
-            user.profile.email = form.cleaned_data.get('email')
+            user.username = form.cleaned_data.get('username')
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.email = form.cleaned_data.get('email')
 
             if form.cleaned_data.get('is_staff') == 'True':
-                user.profile.status = '1'
+                user.is_superuser = True
+                user.is_staff = False
             else:
-                user.profile.status = '2'
+                user.is_superuser = False
+                user.is_staff = True
 
             user.save()
 
@@ -128,11 +130,9 @@ def edit(request, pk, template_name='home_data_user_edit.html'):
 
 
 def delete(request, pk, template_name='confirm_delete.html'):
-    contact = get_object_or_404(Profile, pk=pk)
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
-        contact.delete()
         user.delete()
         return redirect('home:data-user')
-    return render(request, template_name, {'object': contact})
+    return render(request, template_name, {'object': user})
 

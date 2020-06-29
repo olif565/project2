@@ -37,7 +37,7 @@
                     {% for data in data_list.dt %}
                     <tr class="tr-shadow">
                         <td><center><a href="{% url 'home:detail-user' data.pk %}"> {{ forloop.counter }}</a></center></td>
-                        <td>{{ data.first_name }}</td>
+                        <td><a href="{% url 'home:detail-user' data.pk %}"> {{ data.first_name }}</td>
                         <td>{{ data.username }}</td>
                         <td>{{ data.email }}</td>
                         <td>{{ data.status }}</td>
