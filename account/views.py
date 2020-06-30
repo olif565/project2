@@ -30,6 +30,7 @@ def login_view(request):
                             status = '1'
                         else:
                             status = '0'
+                        request.session['id'] = db[0].id
                         request.session['username'] = db[0].username
                         request.session['first_name'] = db[0].first_name
                         request.session['status'] = status
@@ -74,6 +75,7 @@ def signup_view(request):
                         status = '1'
                     else:
                         status = '0'
+                    request.session['id'] = db[0].id
                     request.session['username'] = db[0].username
                     request.session['first_name'] = db[0].first_name
                     request.session['status'] = status

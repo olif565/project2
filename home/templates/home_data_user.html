@@ -53,11 +53,13 @@
                                         <i class="zmdi zmdi-edit"></i>
                                     </button>
                                 </a>
+                                {% if request.session.id != data.pk %}
                                 <a href="{% url 'home:delete-user' data.pk %}">
                                     <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="zmdi zmdi-delete"></i>
                                     </button>
                                 </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
